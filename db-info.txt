@@ -1,0 +1,52 @@
+MEMBERS
+
+member_id (pk)
+firstname
+lastname
+email
+tel.
+password
+
+--------------
+
+RESERVATIONS
+
+reservation_id (pk)
+check_in_date
+check_out_date
+guest_count
+total_price
+special_request
+member_id (fk --> MEBERS)
+status
+
+---------------
+
+ROOMS
+
+room_id (pk)
+room_number
+room_type
+price_per_night
+rooms_count
+
+
+---------------
+
+NEWS
+
+news_id (pk)
+title
+content
+category
+images
+
+---------------
+RESERVATIONS_ROOMS
+
+reservations_rooms_id (Pk)
+reservation_id (FK)
+room_id (FK)
+
+
+
