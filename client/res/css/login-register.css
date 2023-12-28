@@ -1,0 +1,45 @@
+.register {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.l-img {
+  min-height: 100%;
+  width: auto;
+  object-fit: cover;
+  position: relative;
+}
+
+.formInputs > div,
+h2 {
+  padding: 7px 0px 7px 0px;
+  font-weight: bold;
+}
+
+input {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 5px 0px 5px 0px;
+  border: none;
+  border-bottom: 1px solid #15736b;
+  outline: none;
+  font-size: 16px;
+}
+
+
+@media (max-width: 767px) {
+  .shadow-box {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .shadow-box {
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  }
+}
