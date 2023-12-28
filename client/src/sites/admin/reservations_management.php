@@ -35,7 +35,7 @@ $reservations = getMembersReservations();
                     <?php foreach ($reservations as $reservation) : ?>
                         <tr>
                             <td>
-                                <a href=<?= '?members_profile=' . $reservation['member_id'] ?>>
+                                <a href=<?= '?members-profile=' . $reservation['member_id'] ?>>
                                     <img src="<?php echo isset($reservation["image"]) ? $reservation["image"] : 'src/images/default.png' ?>" alt="Profile Image" class="rounded-circle img-circle" width="50" height="50" id="profile">
                                 </a>
                             </td>
