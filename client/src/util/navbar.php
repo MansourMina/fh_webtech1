@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <?php if (isset($_SESSION['member_id'])) : ?>
             <?php if ($_SESSION['is_admin'] == 1) : ?>
-                <button class="btn-lg me-5 btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkManagement" aria-controls="offcanvasDarkManagement" aria-expanded="false" aria-label="Toggle sidebar" style="display: block !important;">
+                <button class="navbar-toggle btn-lg me-5 btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkManagement" aria-controls="offcanvasDarkManagement" aria-expanded="false" aria-label="Toggle sidebar" style="display: block !important;">
                     <i class="fa fa-align-left bg-transparent"></i>
                 </button>
             <?php endif; ?>

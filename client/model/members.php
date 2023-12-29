@@ -15,12 +15,12 @@ function getMembersCred()
     return $creds;
 }
 
-function registerUser($firstname, $lastname, $email, $phone_number,  $hashedPassword,  $account_created)
+function registerUser($firstname, $lastname, $email, $phone_number,  $hashedPassword,  $account_created, $date_of_birth)
 {
-    $sql = "INSERT INTO members(firstname, lastname, email, phone_number, `password`, account_created) "
-        . "VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO members(firstname, lastname, email, phone_number, `password`, account_created, date_of_birth) "
+        . "VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = db->prepare($sql);
-    $stmt->bind_param("ssssss", $firstname, $lastname, $email, $phone_number,  $hashedPassword,  $account_created);
+    $stmt->bind_param("sssssss", $firstname, $lastname, $email, $phone_number,  $hashedPassword,  $account_created, $date_of_birth);
     $stmt->execute();
     return $stmt;
 }
@@ -40,7 +40,7 @@ function getUserByAttribute($attribute, $value, $param)
 }
 
 
-function updateProfile($attributes)
+function updateProfile($attributes, $member_id)
 {
     $sql = "UPDATE members SET ";
     $params = "";
@@ -51,7 +51,7 @@ function updateProfile($attributes)
         $values[] = $value;
     }
     $params .= "i";
-    $values[] = $_SESSION["member_id"];
+    $values[] = $member_id;
 
     //Löscht den letzten Beistrich vor der Where klausel
     $sql = rtrim(trim($sql), ', ') . " WHERE member_id = ?";
@@ -95,7 +95,8 @@ function getMember($member_id)
     }
 }
 
-function changeMemberLogin($member_id, $status){
+function changeMemberLogin($member_id, $status)
+{
     $sql = "UPDATE members SET is_active = ? where member_id = ? ";
     $stmt = db->prepare($sql);
     $stmt->bind_param("ii", $status, $member_id);

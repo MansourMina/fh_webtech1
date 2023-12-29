@@ -52,7 +52,7 @@
 
                 <p class="fw-bolder mb-0">In-Room Entertainment</p>
                 <p>Enjoy a flat-screen TV with a diverse channel selection, ensuring you can relax with your preferred shows or movies during your stay.</p>
-                <?php if (isset($_SESSION['is_admin']) == 0 || !isset($_SESSION['member_id'])) : ?>
+                <?php if ((isset($_SESSION['member_id']) && $_SESSION['is_admin'] == 0) || !isset($_SESSION['member_id'])) : ?>
 
                     <a class="btn btn-outline-dark" href="?book=<?php echo "Deluxe Ocean-View Suite"; ?>">Book Now <i class="fa fa-hotel "></i></a>
                 <?php endif; ?>
@@ -82,7 +82,7 @@
                 These thoughtfully appointed rooms are equipped with a range of amenities catering to families
 
                 <p>These family-oriented rooms feature amenities such as kid-friendly entertainment with a selection of movies and TV channels suitable for all ages. Safety is prioritized with childproofing features, providing peace of mind for parents. The spacious layout is designed for comfort, offering ample room for families to move around, blending functionality and style for everyone's relaxation.</p>
-                <?php if (isset($_SESSION['is_admin']) == 0 || !isset($_SESSION['member_id'])) : ?>
+                <?php if ((isset($_SESSION['member_id']) && $_SESSION['is_admin'] == 0) || !isset($_SESSION['member_id'])) : ?>
 
                     <a class="btn btn-outline-dark" href="?book=<?php echo "Family-Friendly Accommodation"; ?>">Book Now <i class="fa fa-hotel "></i></a>
                 <?php endif; ?>
@@ -110,7 +110,7 @@
                 Your Elegant Suite is thoughtfully equipped with an array of amenities to enhance your stay
 
                 <p>The room features a spacious private balcony, ideal for starting the day with coffee or unwinding in the evening with coastal views. Stay connected with high-speed Wi-Fi, enjoy an entertainment system with a flat-screen TV, and indulge in a well-stocked mini-bar. Pamper yourself with premium bath amenities for added luxury.</p>
-                <?php if (isset($_SESSION['is_admin']) == 0 || !isset($_SESSION['member_id'])) : ?>
+                <?php if ((isset($_SESSION['member_id']) && $_SESSION['is_admin'] == 0) || !isset($_SESSION['member_id'])) : ?>
 
                     <a class="btn btn-outline-dark" href="?book=<?php echo "Elegant Suite with Private Balcony"; ?>">Book Now <i class="fa fa-hotel "></i></a>
                 <?php endif; ?>
@@ -146,8 +146,7 @@
                 <p class="p-0 m-0">Workstation with desk and chair</p>
                 <p class="p-0 m-0">Climate control for personalized comfort</p>
                 </p>
-                <?php if (isset($_SESSION['is_admin']) == 0 || !isset($_SESSION['member_id'])) : ?>
-
+                <?php if ((isset($_SESSION['member_id']) && $_SESSION['is_admin'] == 0) || !isset($_SESSION['member_id'])) : ?>
                     <a class="btn btn-outline-dark" href="?book=<?php echo "Classic Comfort and Timeless Elegance"; ?>">Book Now <i class="fa fa-hotel "></i></a>
                 <?php endif; ?>
             </div>

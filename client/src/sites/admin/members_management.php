@@ -2,10 +2,8 @@
 $name = "";
 $errors = array();
 $searchResults = array();
-$searched = false;
 $found = false;
 if (isset($_GET['members'])) {
-    $searched = true;
     $name = isset($_GET['members']) ? $_GET['members'] : "";
     if (empty($name)) {
         $found = false;
@@ -16,6 +14,7 @@ if (isset($_GET['members'])) {
                 $searchResults[] = $member;
             }
         }
+        $found = true;
     }
 }
 
@@ -50,7 +49,7 @@ if (isset($_GET['members'])) {
         <form action="" method="GET">
             <div class="input-group mb-3 rounded-pill">
                 <input type="text" class="form-control " placeholder="Members name" aria-label="Recipient's username" aria-describedby="button-addon2" id="name" name="members" value="">
-                <button type="submit" id="button-addon2" class="btn btn-outline-secondary" >
+                <button type="submit" id="button-addon2" class="btn btn-outline-secondary">
                     Search
                 </button>
             </div>
@@ -81,8 +80,9 @@ if (isset($_GET['members'])) {
                 </a>
 
             <?php endforeach; ?>
-        <?php elseif ($searched) : ?>
+        <?php else : ?>
             <p>No results found.</p>
+            <?= $_GET["members"]; ?>
         <?php endif; ?>
     </div>
 

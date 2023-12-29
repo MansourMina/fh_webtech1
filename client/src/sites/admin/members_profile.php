@@ -1,5 +1,7 @@
 <?php
 $member = NULL;
+$toUpdate = array();
+
 if (isset($_GET['members-profile'])) {
     $member = getMember($_GET['members-profile']);
 }
@@ -10,6 +12,23 @@ if (isset($_POST['changeLoginStatus'])) {
         header("Location: ?members-profile=" . $member['member_id']);
         exit();
     }
+}
+
+
+//TODO: Check if email already existing
+if (isset($_POST["changeMemberEmail"])) {
+    $member_email = isset($_POST['member_email']) ? $_POST['member_email'] : "";
+    if (!empty($member_email)) {
+        $toUpdate["email"] = $member_email;
+    }
+    if (count($toUpdate) > 0) {
+        $stmt = updateProfile($toUpdate, $member["member_id"]);
+        if ($stmt) {
+            $updatedUser = getUserByAttribute("member_id", $member["member_id"], "i");
+        }
+    }
+    header("Location: ?members-profile=" . $member['member_id']);
+    exit();
 }
 ?>
 
@@ -89,13 +108,14 @@ if (isset($_POST['changeLoginStatus'])) {
 
                                 <h5 class="my-3 mb-1 fw-bold"><?php echo "{$member['firstname']} {$member['lastname']}" ?></h5>
                                 <p class="text-muted mb-1"><?php echo $member["email"] ?></p>
+
                             </div>
                         </div>
                     </div>
 
                     <div class="col-xl-9 col-lg-9">
-                        <p class="h2 fw-bold">Members information</p>
-                        <p class="text-body-secondary">These are the members information.</p>
+                        <p class="h2 fw-bold">Manage member information</p>
+                        <p class="text-body-secondary">Make updates below to ensure the best support and experience for each member.</p>
 
                         <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 mt-5">
                             <div class="col mb-5 ">
@@ -103,7 +123,7 @@ if (isset($_POST['changeLoginStatus'])) {
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
                                             <div>
-                                                <p class="mb-0 h5 fw-bold">Name</p>
+                                                <p class="mb-0 h5 fw-bold">Firstname</p>
 
                                                 <div class="input-group ">
                                                     <p class="my-2 text-secondary"> <?php echo $member['firstname'] ?>
@@ -125,7 +145,7 @@ if (isset($_POST['changeLoginStatus'])) {
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
                                             <div>
-                                                <p class="mb-0 h5 fw-bold">Name</p>
+                                                <p class="mb-0 h5 fw-bold">Lastname</p>
 
                                                 <div class="input-group ">
                                                     <p class="my-2 text-secondary"><?php echo $member['lastname'] ?></p>
@@ -147,8 +167,33 @@ if (isset($_POST['changeLoginStatus'])) {
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
                                             <div>
+
                                                 <p class="mb-0 h5 fw-bold">Email</p>
-                                                <p class="my-2 text-secondary"><?php echo $member["email"] ?></p>
+                                                <?php if (!$member["is_admin"]) : ?>
+                                                    <div class="input-group ">
+
+                                                        <input class="form-control my-2 text-secondary " type="email" value="<?php echo $member["email"] ?>" id="memberEmailField" name="member_email" aria-label="Change members email" aria-describedby="member_email-button" readonly>
+
+                                                        <button class="btn p-0 ms-4" type="button" id="memberEmailButton" onclick="toggleReadOnly('memberEmailButton', 'memberEmailField', '<?php echo $member['email']; ?>')"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                                <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
+                                                        </button>
+                                                        <form action="" method="post">
+                                                            <button class="btn ms-4 " name="changeMemberEmail" type="submit" id="saveMemberEmail" style="display: none;">
+                                                                <i class="fa fa-check fa-lg"></i>
+                                                            </button>
+                                                        </form>
+
+
+                                                    </div>
+                                                <?php else : ?>
+
+                                                    <div class="input-group ">
+                                                        <p class="my-2 text-secondary"><?php echo $member['email'] ?></p>
+                                                    </div>
+
+                                                <?php endif; ?>
+
+
 
                                             </div>
                                             <div class="ms-auto">
@@ -186,7 +231,7 @@ if (isset($_POST['changeLoginStatus'])) {
 
                                             </div>
                                             <div class="ms-auto">
-                                                <i class="fa fa-user fa-lg"></i>
+                                                <i class="fa fa-phone fa-lg"></i>
                                             </div>
 
                                         </div>
@@ -203,10 +248,12 @@ if (isset($_POST['changeLoginStatus'])) {
         <div class=" text-center ">
             <p>Account created: <?php echo $member["account_created"] ?></p>
         </div>
-        <div class="text-center">
-            <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn <?= $member["is_active"] == 0 ? "btn-success" : "btn-danger" ?> mb-3 " type="submit"><?= $member["is_active"] == 0 ? "Activate account" : "Deactivate account" ?>
-            </button>
-        </div>
+        <?php if (!$member["is_admin"]) : ?>
+            <div class="text-center">
+                <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn <?= $member["is_active"] == 0 ? "btn-success" : "btn-danger" ?> mb-3 " type="submit"><?= $member["is_active"] == 0 ? "Activate account" : "Deactivate account" ?>
+                </button>
+            </div>
+        <?php endif; ?>
 
     </div>
 
@@ -242,6 +289,7 @@ if (isset($_POST['changeLoginStatus'])) {
         </div>
     </div>
 
+    <script src="res/js/index.js"> </script>
 
 </body>
 

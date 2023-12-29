@@ -57,8 +57,13 @@ if (!empty($phone_number) && $phone_number != $_SESSION["phone_number"]) {
     $toUpdate["phone_number"] = $phone_number;
 }
 
+$email = isset($_POST['email']) ? $_POST['email'] : "";
+if (!empty($email) && $email != $_SESSION["email"]) {
+    $toUpdate["email"] = $email;
+}
+
 if (count($toUpdate) > 0) {
-    $stmt = updateProfile($toUpdate);
+    $stmt = updateProfile($toUpdate, $_SESSION["member_id"]);
     if ($stmt) {
         $updatedUser = getUserByAttribute("member_id", $_SESSION["member_id"], "i");
         $_SESSION = $updatedUser;

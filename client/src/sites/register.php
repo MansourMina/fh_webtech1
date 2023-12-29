@@ -6,6 +6,7 @@ $lastname = "";
 $confirmPassword = "";
 $confirmAGB = "";
 $phone_number = "";
+$date_of_birth = "";
 $errors = [];
 
 if (isset($_POST["register"])) {
@@ -16,7 +17,8 @@ if (isset($_POST["register"])) {
     'firstname' => 'Firstname',
     'lastname' => 'Lastname',
     'confirmAGB' => 'Agreement to Terms and Conditions',
-    'phone_number' => 'Phone Number'
+    'phone_number' => 'Phone Number',
+    'date_of_birth' => 'Date of birth'
   ];
 
   foreach ($fields as $field => $error) {
@@ -39,11 +41,11 @@ if (isset($_POST["register"])) {
     if (empty($errors)) {
       $account_created = date("Y-m-d");
       $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-      $stmt = registerUser($firstname, $lastname, $email, $phone_number,  $hashedPassword,  $account_created);
+      $stmt = registerUser($firstname, $lastname, $email, $phone_number,  $hashedPassword,  $account_created, $date_of_birth);
       if ($stmt) {
         $new_user = getUserByAttribute("email", $email, "s");
         $_SESSION = $new_user;
-        header('Location: ?');
+        header('Location: index.php');
       } else {
         echo "FEHLER";
       }
@@ -90,16 +92,26 @@ if (isset($_POST["register"])) {
               </div>
             </div>
             <div>
-              <input placeholder="Phone number" type="number" id="phone_number" name="phone_number" value="<?= $phone_number ?>" />
-              <?php if (isset($errors["phone_number"])) {
-                echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["phone_number"] . "</span>";
-              } ?>
-            </div>
-            <div>
               <input placeholder="E-Mail" type="email" id="email" name="email" value="<?= $email ?>" />
               <?php if (isset($errors["email"])) {
                 echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["email"] . "</span>";
               } ?>
+            </div>
+            <div class="mt-2 d-flex justify-content-between">
+
+              <div class="px-0">
+                <input placeholder="Phone number" type="number" id="phone_number" name="phone_number" value="<?= $phone_number ?>" />
+                <?php if (isset($errors["phone_number"])) {
+                  echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["phone_number"] . "</span>";
+                } ?>
+              </div>
+              <div class="px-0">
+                <input placeholder="Date of birth" type="date" id="date_of_birth" name="date_of_birth" value="<?= $date_of_birth ?>" />
+                <?php if (isset($errors["date_of_birth"])) {
+                  echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["date_of_birth"] . "</span>";
+                } ?>
+              </div>
+
             </div>
 
             <div>

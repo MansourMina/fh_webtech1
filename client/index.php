@@ -23,8 +23,8 @@ $pages = [
     "team" => ["file" => "team.php", "title" => "Team", "role" => [0, 1, 2],  "showBar" => true],
     "news" => ["file" => "news.php", "title" => "News", "role" => [0, 1, 2],  "showBar" => true],
     "rooms" => ["file" => "rooms.php", "title" => "Rooms", "role" => [0, 1, 2],  "showBar" => true],
-    "reservations" => ["file" => "reservations.php", "title" => "Reservations", "role" => [1],  "showBar" => true],
-    "book" => ["file" => "book.php", "title" => "Booking", "role" => [1],  "showBar" => true, "to_login" => true],
+    "reservations" => ["file" => "user/reservations.php", "title" => "Reservations", "role" => [1],  "showBar" => true],
+    "book" => ["file" => "user/book.php", "title" => "Booking", "role" => [1],  "showBar" => true, "to_login" => true],
     "404" => ["file" => "404.php", "title" => "Page not Found", "role" => [0, 1, 2],  "showBar" => false],
     "members" => ["file" => "admin/members_management.php", "title" => "Members Management", "role" => [2],  "showBar" => true],
     "news-management" => ["file" => "admin/news_management.php", "title" => "News Management", "role" => [2],  "showBar" => true],
@@ -63,10 +63,10 @@ if (!file_exists($fullPath)) {
     exit();
 }
 //navigating with ?
-// if ((!$pageFound && !empty($_GET))) {
-//     header("Location: ?404");
-//     exit();
-// }
+if ((!$pageFound && !empty($_GET))) {
+    header("Location: ?404");
+    exit();
+}
 
 // Update Users Profile
 if (isset($_POST["saveChanges"])) {
@@ -119,6 +119,7 @@ if (isset($_POST["saveChanges"])) {
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+   
 </body>
 
 </html>

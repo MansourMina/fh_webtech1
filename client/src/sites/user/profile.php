@@ -1,17 +1,19 @@
 <?php
 $errors = [];
-$old_password = "";
-$new_password = "";
 $toUpdate = array();
 if (isset($_POST["changePassword"])) {
-
     $old_password = isset($_POST['old_password']) ? $_POST['old_password'] : "";
-    if (password_verify($old_password, $_SESSION["password"])) {
-        $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : "";
+    $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : "";
+    if (empty($old_password)) {
+        $errors["old_password"] = "Please confirm your old password!";
+    }
+    if (empty($new_password)) {
+        $errors["new_password"] = "New password is required!";
+    } else if (password_verify($old_password, $_SESSION["password"])) {
         if (!empty($new_password) && $new_password != $_SESSION["password"]) {
             $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);
             $toUpdate["password"] = $hashedPassword;
-            $stmt = updateProfile($toUpdate);
+            $stmt = updateProfile($toUpdate, $_SESSION["member_id"]);
             if ($stmt) {
                 $updatedUser = getUserByAttribute("member_id", $_SESSION["member_id"], "i");
                 $_SESSION = $updatedUser;
@@ -20,7 +22,7 @@ if (isset($_POST["changePassword"])) {
             exit();
         }
     } else {
-        $errors["wrong_password"] = "Wrong Password!";
+        $errors["wrong_password"] = "Password confirmation failed!";
     }
 }
 ?>
@@ -105,7 +107,10 @@ if (isset($_POST["changePassword"])) {
                                 </div>
 
                                 <h5 class="my-3 mb-1 fw-bold"><?php echo "{$_SESSION['firstname']} {$_SESSION['lastname']}" ?></h5>
+
                                 <p class="text-muted mb-1"><?php echo $_SESSION["email"] ?></p>
+
+
                             </div>
 
                         </div>
@@ -168,7 +173,17 @@ if (isset($_POST["changePassword"])) {
                                         <div class="d-flex align-items-center">
                                             <div>
                                                 <p class="mb-0 h5 fw-bold">Email</p>
-                                                <p class="my-2 text-secondary"><?php echo $_SESSION["email"] ?></p>
+                                                <?php if (!$_SESSION["is_admin"]) : ?>
+                                                    <p class="my-2 text-secondary"><?php echo $_SESSION["email"] ?></p>
+
+                                                <?php else : ?>
+                                                    <div class="input-group ">
+                                                        <input class="form-control my-2 text-secondary " type="email" value="<?php echo $_SESSION["email"] ?>" id="emailField" name="email" aria-label="Change email" aria-describedby="member_email-button" readonly>
+                                                        <button class="btn p-0 ms-4" type="button" id="emailButton" onclick="toggleReadOnly('emailButton', 'emailField', '<?php echo $_SESSION['email']; ?>')"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                                <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
+                                                            </svg></button>
+                                                    </div>
+                                                <?php endif; ?>
 
                                             </div>
                                             <div class="ms-auto">
@@ -184,7 +199,7 @@ if (isset($_POST["changePassword"])) {
                                         <div class="d-flex align-items-center">
                                             <div>
                                                 <p class="mb-0 h5 fw-bold">Date of birth</p>
-                                                <p class="my-2 text-secondary">21.11.2002</p>
+                                                <p class="my-2 text-secondary"><?= $_SESSION["date_of_birth"] ?></p>
                                             </div>
                                             <div class="ms-auto">
                                                 <i class="fa fa-calendar fa-lg"></i>
@@ -272,7 +287,7 @@ if (isset($_POST["changePassword"])) {
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="old_password" class="col-form-label">Confirm old password</label>
+                            <label for="old_password" class="col-form-label">Old password</label>
                             <input type="password" class="form-control" id="old_password" name="old_password">
                             <?php if (isset($errors["old_password"])) {
                                 echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["old_password"] . "</span>";
@@ -299,45 +314,7 @@ if (isset($_POST["changePassword"])) {
         </div>
     </div>
 
-    <script>
-        function loadFile(event) {
-            var image = document.getElementById("profile");
-            image.src = URL.createObjectURL(event.target.files[0]);
-            var save = document.getElementById('saveButton');
-            save.removeAttribute("disabled");
-        };
-
-
-        function toggleReadOnly(buttonName, inputName, value) {
-            if (buttonName == "passwordButton") {
-                var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-                myModal.show();
-            }
-            var input = document.getElementById(inputName);
-            var button = document.getElementById(buttonName);
-            var save = document.getElementById('saveButton');
-
-            if (buttonName != "passwordButton") {
-                if (input.readOnly) {
-                    button.style.display = "none";
-                    input.readOnly = !input.readOnly;
-                }
-            }
-
-            input.addEventListener("change", function(e) {
-                if (e.target.value.trim() !== value.trim())
-                    save.removeAttribute("disabled");
-            });
-
-        }
-
-        function closePassword() {
-            let oldPasswordField = document.getElementById('old_password');
-            let newPasswordField = document.getElementById('new_password');
-            oldPasswordField.value = "";
-            newPasswordField.value = "";
-        }
-    </script>
+    <script src="res/js/index.js"> </script>
 </body>
 
 </html>
