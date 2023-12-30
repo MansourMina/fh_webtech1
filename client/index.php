@@ -7,8 +7,12 @@ $pageFound = false;
 $showBar = true;
 
 
+
 include_once 'model/members.php';
 $role = getRole();
+
+if ($role != 2)  include_once 'src/util/discount.php';
+
 // role 0 -> for anonyms
 // role 1 -> for logged users
 // role 2 ->  for admin
@@ -119,7 +123,7 @@ if (isset($_POST["saveChanges"])) {
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-   
+
 </body>
 
 </html>

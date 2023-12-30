@@ -1,5 +1,4 @@
 <?php
-$GLOBALS["link"] = "No";
 include_once 'model/news.php';
 
 $news = getNews();
@@ -69,8 +68,7 @@ $news = getNews();
                     "search": ""
                 },
                 "initComplete": function() {
-                    // Nach Abschluss der DataTables-Initialisierung
-                    // Selektiere das Suchfeld und ändere den Platzhaltertext
+
                     $('#myDataTable_filter input').attr('placeholder', 'Search');
                 }
             });
@@ -113,7 +111,7 @@ $news = getNews();
                         <?php $i = 1;
                         foreach ($news as $current_news) : ?>
 
-                            <tr onclick="showNews(`<?= $current_news['title'] ?>`);" style="cursor: pointer;">
+                            <tr onclick="openModal('exampleModal<?= $i ?>')" style="cursor: pointer;">
 
                                 <th scope="row"><?= $i ?></th>
                                 <th><img src="<?= $current_news["image"] ?>" width="100" class="datatable-image"></th>
@@ -124,9 +122,32 @@ $news = getNews();
                                     <?= $current_news["content"] ?>
                                 </td>
                                 <td><?= $current_news["status"] ?></td>
-                                <!-- <span style='color: red; max-width: 200px; vertical-align: middle;' class='d-inline-block text-truncate'> <?= $_SESSION['firstname'] . " " . $_SESSION['lastname'] ?></span> -->
                             </tr>
+                            <div class="modal" id="exampleModal<?= $i ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title"><?= $current_news["title"] ?></h5>
+                                            <?php if ($current_news["news_of_the_day"]) : ?>
+                                                <span class="badge text-bg-success ms-2">News of the day</span>
+                                            <?php endif; ?>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="<?= $current_news["image"] ?>" width="100" class="datatable-image">
+
+                                            <p>
+                                                <?= $current_news["content"] ?>
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <?php $i++; ?>
+
                         <?php endforeach; ?>
 
                     </tbody>
@@ -136,33 +157,16 @@ $news = getNews();
             <div class="tab-pane fade" id="list-news" role="tabpanel" aria-labelledby="list-news-list">...</div>
 
         </div>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
-        </button>
-        <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Modal body text goes here.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-            function showNews(title) {
-                var newsModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-                newsModal.show();
-                document.querySelector('.modal-title').textContent = title;
-            }
-        </script>
+
+
+    </div>
+
+    <script>
+        function openModal(id) {
+            var modal = new bootstrap.Modal(document.getElementById(id));
+            modal.show();
+        }
+    </script>
 </body>
 
 </html>
