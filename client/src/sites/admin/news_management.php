@@ -1,7 +1,20 @@
 <?php
 include_once 'model/news.php';
-
+$publishStatus = null;
+$news_id = null;
 $news = getNews();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $news_id = isset($_POST['news_id']) ? $_POST['news_id'] : null;
+    if (isset($_POST['publishStatus'])) {
+        $publishStatus = $_POST['publishStatus'] == 1 ? 0 : 1;
+    }
+    $stmt = changePublishStatus($news_id, $publishStatus);
+    if ($stmt) {
+        header("Location: ?news-management");
+        exit;
+    }
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -54,6 +67,17 @@ $news = getNews();
             border-radius: var(--bs-border-radius);
             transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
         }
+
+
+        .form-switch .form-check-input:focus {
+            border-color: rgba(0, 0, 0, 0.25);
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+        }
+
+        .form-switch .form-check-input:checked {
+            background-color: #15736b;
+            border-color: #15736b;
+        }
     </style>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -98,22 +122,22 @@ $news = getNews();
                 <table class="table" id="myDataTable">
                     <thead>
                         <tr>
-                            <th class="col-1">#</th>
+                            <th class="col-1 ">#</th>
                             <th class="col-1">Image</th>
                             <th class="col-1">Category</th>
                             <th class="col-2">Title</th>
                             <th class="col-1">Date</th>
                             <th class="col-5">Content</th>
-                            <th class="col-1">Publish status</th>
+                            <th class="col-1 text-center">Status</th>
                         </tr>
                     </thead>
                     <tbody>
+
                         <?php $i = 1;
                         foreach ($news as $current_news) : ?>
 
-                            <tr onclick="openModal('exampleModal<?= $i ?>')" style="cursor: pointer;">
-
-                                <th scope="row"><?= $i ?></th>
+                            <tr>
+                                <th scope="row"><?= $i ?> <i style="cursor: pointer;" class="fa fa-eye fa-lg ms-5" onclick="openModal('exampleModal<?= $i ?>')"></i></th>
                                 <th><img src="<?= $current_news["image"] ?>" width="100" class="datatable-image"></th>
                                 <td><?= $current_news["category"] ?></td>
                                 <td><?= $current_news["title"] . " " . ($current_news["news_of_the_day"] == 1 ? "(News of the day)" : "") ?></td>
@@ -121,10 +145,21 @@ $news = getNews();
                                 <td class="overflow-hidden" style="white-space: nowrap; text-overflow: ellipsis; max-width: 300px;">
                                     <?= $current_news["content"] ?>
                                 </td>
-                                <td><?= $current_news["status"] ?></td>
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <form action="<?= $_SERVER['REQUEST_URI'] ?>" name=" test" method="post" id="publishStatusForm_<?= $current_news['news_id'] ?>">
+                                            <input type="hidden" name="news_id" value="<?= $current_news['news_id'] ?>">
+                                            <div class="form-check form-switch ">
+                                                <input class="form-check-input" name="publishStatus" type="checkbox" role="switch" onchange="submitForm('publishStatusForm_<?= $current_news['news_id'] ?>')" id="switch<?= $i ?>" <?= $current_news["status"] ? 'checked' : '' ?>>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </td>
+
                             </tr>
                             <div class="modal" id="exampleModal<?= $i ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-dialog modal-lg modal-dialog-scrollable">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title"><?= $current_news["title"] ?></h5>
@@ -134,17 +169,41 @@ $news = getNews();
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <img src="<?= $current_news["image"] ?>" width="100" class="datatable-image">
+                                            <div>
+                                                <div class="bg-image mb-4">
+                                                    <img src="<?= $current_news['image'] ?>" class="img-fluid" />
 
-                                            <p>
-                                                <?= $current_news["content"] ?>
-                                            </p>
+                                                </div>
+                                                <div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-6">
+
+
+                                                            <p class="category"><i class="fa fa-<?= getIcon($current_news['category']) ?>"></i> <?= $current_news["category"] ?></p>
+                                                        </div>
+
+                                                        <div class="col-6 text-end text-secondary">
+                                                            <?= $current_news["date"] ?>
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <h5 class="mb-4 fw-bold"> <?= $current_news["title"] ?></h5>
+                                                        <p>
+                                                            <!-- nl2br übernimmt die newLines von den Daten der Datenbank -->
+                                                            <?= nl2br($current_news["content"]) ?>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                             <?php $i++; ?>
 
@@ -166,6 +225,11 @@ $news = getNews();
             var modal = new bootstrap.Modal(document.getElementById(id));
             modal.show();
         }
+
+        function submitForm(formId) {
+            document.getElementById(formId).submit();
+        }
+    </script>
     </script>
 </body>
 

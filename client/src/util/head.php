@@ -7,6 +7,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,400;0,700;1,300&display=swap" rel="stylesheet">
+<?php
+function getIcon($icon)
+{
+    $icons = ["country" => "flag", "business" => "briefcase", "renovation" => "hotel", "hotel" => "hotel"];
+    if (!array_key_exists(strtolower($icon), $icons)) return '';
+    return $icons[strtolower($icon)];
+} ?>
 <style>
     * {
         font-family: 'Roboto Mono', monospace;
@@ -22,8 +29,8 @@
     }
 
     .title,
-    i {
-        color: #15736b;
+    i, .category {
+        color: #15736b !important;
     }
 
     body.dark-mode {
@@ -43,8 +50,10 @@
     i.dark-mode {
         color: #ffffff;
     }
+
     body {
         height: fit-content;
     }
 
+   
 </style>
