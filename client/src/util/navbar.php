@@ -19,8 +19,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-            <ul class="navbar-nav mr-auto mx-5 ">
-                <li class="nav-item mx-3 py-1">
+            <ul class="navbar-nav mr-auto mx-5  ">
+                <li class="nav-item mx-3 py-1 ">
                     <a class="nav-link nav_title " aria-current="page" href="?">Home</a>
                 </li>
                 <li class="nav-item mx-3 py-1">
@@ -76,7 +76,7 @@
 
 <!-- Admin Management navigation -->
 <div class="container-fluid">
-    <div class="offcanvas offcanvas-start " tabindex="-1" id="offcanvasDarkManagement" aria-labelledby="offcanvasDarkManagementLabel">
+    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasDarkManagement" aria-labelledby="offcanvasDarkManagementLabel">
         <div class="offcanvas-header justify-content-end">
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
@@ -85,16 +85,16 @@
             <p class="mb-0 mt-2 h5 fw-bold"><?= $_SESSION["firstname"] . " " . $_SESSION["lastname"] ?></p>
             <p class="mb-0 text-secondary">Admin</p>
         </div>
-        <div class="offcanvas-body">
+        <div class="offcanvas-body ">
             <hr>
 
             <h5 class="offcanvas-title" id="offcanvasDarkManagementLabel">Management</h5>
             <hr>
 
-            <ul class="navbar-nav justify-content-end flex-grow-1 ps-3">
+            <ul class="navbar-nav justify-content-end flex-grow-1 ">
                 <li class="nav-item">
                     <div class="d-flex align-items-center">
-                        <i class="fa fa-users me-4 sidebar-icon"></i>
+                        <i class="fa fa-users  me-4 sidebar-icon"></i>
                         <a class="nav-link active" aria-current="page" href="?members">Members</a>
                     </div>
                 </li>
@@ -117,7 +117,7 @@
             </ul>
         </div>
         <div class="offcanvas-footer align-items-center text-center mb-4">
-            <p class="mb-0 text-secondary">Admin </p>
+            <a class='mb-0 text-secondary' style="text-decoration:none" href='?logout'>Logout</a>
         </div>
     </div>
 </div>

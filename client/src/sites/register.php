@@ -41,9 +41,9 @@ if (isset($_POST["register"])) {
     if (empty($errors)) {
       $account_created = date("Y-m-d");
       $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-      $stmt = registerUser($firstname, $lastname, $email, $phone_number,  $hashedPassword,  $account_created, $date_of_birth);
+      $stmt = registerMember($firstname, $lastname, $email, $phone_number,  $hashedPassword,  $account_created, $date_of_birth);
       if ($stmt) {
-        $new_user = getUserByAttribute("email", $email, "s");
+        $new_user = getMemberByAttribute("email", $email, "s");
         $_SESSION = $new_user;
         header('Location: index.php');
       } else {

@@ -15,7 +15,7 @@ if (isset($_POST["changePassword"])) {
             $toUpdate["password"] = $hashedPassword;
             $stmt = updateProfile($toUpdate, $_SESSION["member_id"]);
             if ($stmt) {
-                $updatedUser = getUserByAttribute("member_id", $_SESSION["member_id"], "i");
+                $updatedUser = getMemberByAttribute("member_id", $_SESSION["member_id"], "i");
                 $_SESSION = $updatedUser;
             }
             header("Location: ?profile");

@@ -30,7 +30,7 @@ function getIcon($icon)
 
     .title,
     i, .category {
-        color: #15736b !important;
+        color: #15736b;
     }
 
     body.dark-mode {

@@ -1,6 +1,7 @@
 <?php
 include_once 'config/dbaccess.php';
 
+// Function to get all rows from table news
 function getNews()
 {
     $sql = "SELECT * FROM news";
@@ -14,6 +15,7 @@ function getNews()
     return $news;
 }
 
+// Function to change the publish status of specific news (online, offline)
 function changePublishStatus($news_id, $status)
 {
     $sql = "UPDATE news SET `status` = ? where news_id = ? ";

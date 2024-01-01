@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         foreach ($news as $current_news) : ?>
 
                             <tr>
-                                <th scope="row"><?= $i ?> <i style="cursor: pointer;" class="fa fa-eye fa-lg ms-5" onclick="openModal('exampleModal<?= $i ?>')"></i></th>
+                                <th scope="row"><div class="d-flex"><?= $i ?> <i style="cursor: pointer;" class="fa fa-eye fa-lg ms-5 mt-1" onclick="openModal('exampleModal<?= $i ?>')"></i></div></th>
                                 <th><img src="<?= $current_news["image"] ?>" width="100" class="datatable-image"></th>
                                 <td><?= $current_news["category"] ?></td>
                                 <td><?= $current_news["title"] . " " . ($current_news["news_of_the_day"] == 1 ? "(News of the day)" : "") ?></td>

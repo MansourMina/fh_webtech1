@@ -3,7 +3,7 @@ $member = NULL;
 $toUpdate = array();
 
 if (isset($_GET['members-profile'])) {
-    $member = getMember($_GET['members-profile']);
+    $member = getMemberByAttribute("member_id", $_GET['members-profile'], "i");
 }
 if (isset($_POST['changeLoginStatus'])) {
     $status = $member["is_active"] ? 0 : 1;
@@ -24,7 +24,7 @@ if (isset($_POST["changeMemberEmail"])) {
     if (count($toUpdate) > 0) {
         $stmt = updateProfile($toUpdate, $member["member_id"]);
         if ($stmt) {
-            $updatedUser = getUserByAttribute("member_id", $member["member_id"], "i");
+            $updatedUser = getMemberByAttribute("member_id", $member["member_id"], "i");
         }
     }
     header("Location: ?members-profile=" . $member['member_id']);
