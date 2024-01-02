@@ -99,7 +99,7 @@ if (isset($_POST["changePassword"])) {
                         <div class="card mb-4 border-0">
                             <div class="card-body text-center">
                                 <div class="image-container">
-                                    <img src="<?php echo isset($_SESSION["image"]) ? $_SESSION["image"] : 'src/images/default.png' ?>" alt="Profile Image" class="rounded-circle img-circle" width="200" height="200" id="profile">
+                                    <img src="<?php echo isset($_SESSION["image"]) ? $_SESSION["image"] : 'src/images/default.png' ?>" alt="Profile Image" class="rounded-circle" width="200" height="200" id="profile">
                                     <label class="overlay">
                                         Change Image
                                         <input type="file" name="picture" accept="image/jpeg,image/png" class="d-none" onchange="loadFile(event)">

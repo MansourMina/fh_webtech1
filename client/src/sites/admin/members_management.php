@@ -45,7 +45,7 @@ if (isset($_GET['members'])) {
 </head>
 
 <body>
-    <div class="container mt-5 notFound">
+    <div class="container notFound">
         <form action="" method="GET">
             <div class="input-group mb-3 rounded-pill">
                 <input type="text" class="form-control " placeholder="Members name" aria-label="Recipient's username" aria-describedby="button-addon2" id="name" name="members" value="">

@@ -108,19 +108,11 @@ if (isset($_POST["saveChanges"])) {
 </head>
 
 <body class="<?php echo $bodyClass; ?>">
-
-
-    <?php $showBar ? include_once 'src/util/navbar.php' : "" ?>
-
-    <?php include_once 'src/sites/' . $page ?>
-    <?php
-    if ($showBar) {
-        echo "<div class='mt-5'>";
-        include_once 'src/util/footer.php';
-        echo "</div>";
-    }
-    ?>
-
+    <div class="page">
+        <?php $showBar ? include_once 'src/util/navbar.php' : "" ?>
+        <?php include_once 'src/sites/' . $page ?>
+        <?php $showBar ? include_once 'src/util/footer.php' : "" ?>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <script src="res/js/index.js"> </script>

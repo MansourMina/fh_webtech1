@@ -17,7 +17,9 @@ function getIcon($icon)
 <style>
     * {
         font-family: 'Roboto Mono', monospace;
+
     }
+
 
     .btn-full {
         color: white;
@@ -30,6 +32,7 @@ function getIcon($icon)
 
     .title,
     i,
+    svg,
     .category {
         color: #15736b;
     }
@@ -52,8 +55,11 @@ function getIcon($icon)
         color: #ffffff;
     }
 
-    body {
-        height: fit-content;
+    .page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .drk:after {

@@ -28,13 +28,17 @@ foreach ($all_news as $current_news) {
     <style>
         .image-container {
             max-height: 35vh;
+            min-height: 35vh;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .image-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            margin-top: auto;
         }
     </style>
 </head>
@@ -44,10 +48,10 @@ foreach ($all_news as $current_news) {
 
         <?php if ($news_of_the_day != null) : ?>
             <section class="border-bottom pb-4 mb-5">
-                <div class="row gx-5">
+                <div class="row gx-5 ">
                     <div class="col-md-6 mb-4">
                         <div class="bg-image">
-                            <img src="<?= $news_of_the_day['image'] ?>" class="img-fluid " alt="Hotel from outside">
+                            <img src=" <?= $news_of_the_day['image'] ?>" class="img-fluid " alt="Hotel from outside">
                         </div>
                     </div>
 
@@ -72,10 +76,10 @@ foreach ($all_news as $current_news) {
         <?php endif; ?>
 
         <section>
-            <div class="row gx-lg-5 justify-content-center">
+            <div class="row gx-lg-5 justify-content-center ">
                 <?php foreach ($news as $current_news) : ?>
                     <div class="col-lg-<?= count($news) < 3 ? 6 : 4 ?> col-md-12 mb-5 mt-4 mb-lg-0 mt-lg-0">
-                        <div class=" mb-4 text-center image-container">
+                        <div class=" mb-4 text-center image-container ">
                             <img src="<?= $current_news['image'] ?>" class="img-fluid " />
                         </div>
 
