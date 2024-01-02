@@ -29,7 +29,8 @@ function getIcon($icon)
     }
 
     .title,
-    i, .category {
+    i,
+    .category {
         color: #15736b;
     }
 
@@ -55,5 +56,16 @@ function getIcon($icon)
         height: fit-content;
     }
 
-   
+    .drk:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: black;
+        opacity: 0.6;
+        z-index: 1;
+    }
 </style>

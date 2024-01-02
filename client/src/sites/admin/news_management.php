@@ -78,6 +78,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background-color: #15736b;
             border-color: #15736b;
         }
+
+        .dark-overlay {
+            position: relative;
+        }
+
+        table tbody td {
+            vertical-align: middle;
+        }
     </style>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -93,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 },
                 "initComplete": function() {
 
-                    $('#myDataTable_filter input').attr('placeholder', 'Search');
+                    $('#myDataTable_filter input').attr('placeholder', 'Search news');
                 }
             });
         });
@@ -118,8 +126,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </ul>
 
         <div class="tab-content my-4">
-            <div class="tab-pane fade show active" id="list-manager" role="tabpanel" aria-labelledby="list-manager-list">
-                <table class="table" id="myDataTable">
+            <div class="tab-pane fade show active " id="list-manager" role="tabpanel" aria-labelledby="list-manager-list">
+                <table class="table " id="myDataTable">
                     <thead>
                         <tr>
                             <th class="col-1 ">#</th>
@@ -136,13 +144,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php $i = 1;
                         foreach ($news as $current_news) : ?>
 
-                            <tr>
-                                <th scope="row"><div class="d-flex"><?= $i ?> <i style="cursor: pointer;" class="fa fa-eye fa-lg ms-5 mt-1" onclick="openModal('exampleModal<?= $i ?>')"></i></div></th>
-                                <th><img src="<?= $current_news["image"] ?>" width="100" class="datatable-image"></th>
+                            <tr class="<?= $current_news["status"] == 0 ? 'table-secondary fw-light' : '' ?>">
+                                <td scope="row">
+                                    <div class="d-flex align-items-center <?= $current_news["status"] ? 'fw-bold' : 'fw-light' ?>"><?= $i ?> <i data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="mf-tooltip" data-bs-title="Preview" style="cursor: pointer;" class="fa fa-eye fa-lg ms-5 mt-1" onclick="openModal('exampleModal<?= $i ?>')"></i></div>
+                                </td>
+                                <th>
+                                    <div class="<?= $current_news["status"] == 0 ? 'dark-overlay drk' : '' ?>"><img src="<?= $current_news["image"] ?>" class="datatable-image "></div>
+                                </th>
                                 <td><?= $current_news["category"] ?></td>
-                                <td><?= $current_news["title"] . " " . ($current_news["news_of_the_day"] == 1 ? "(News of the day)" : "") ?></td>
+                                <td>
+                                    <?= $current_news["title"] ?>
+                                    <?php if ($current_news["news_of_the_day"]) : ?>
+                                        <span class="badge text-bg-<?= $current_news["status"] == 0 ? 'secondary' : 'success' ?>">News of the day</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td><?= $current_news["date"] ?></td>
-                                <td class="overflow-hidden" style="white-space: nowrap; text-overflow: ellipsis; max-width: 300px;">
+                                <td class="overflow-hidden " style="white-space: nowrap; text-overflow: ellipsis; max-width: 300px;">
                                     <?= $current_news["content"] ?>
                                 </td>
                                 <td>
@@ -161,10 +178,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="modal" id="exampleModal<?= $i ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg modal-dialog-scrollable">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title"><?= $current_news["title"] ?></h5>
+                                        <div class="modal-header ">
+                                            <i data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="mf-tooltip" data-bs-title="Published by <?= $current_news["firstname"] . " " . $current_news["lastname"] ?>" class="<?= $current_news["status"] ? 'text-success' : 'text-danger' ?> fa fa-globe fa-lg me-5"></i>
+
                                             <?php if ($current_news["news_of_the_day"]) : ?>
-                                                <span class="badge text-bg-success ms-2">News of the day</span>
+                                                <span class="badge text-bg-<?= $current_news["status"] == 0 ? 'secondary' : 'success' ?>">News of the day</span>
                                             <?php endif; ?>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
@@ -198,9 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        </div>
+
                                     </div>
                                 </div>
 
@@ -213,9 +229,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 </table>
             </div>
-            <div class="tab-pane fade" id="list-news" role="tabpanel" aria-labelledby="list-news-list">...</div>
-
         </div>
+        <div class="tab-pane fade" id="list-news" role="tabpanel" aria-labelledby="list-news-list">...</div>
+
+    </div>
 
 
     </div>

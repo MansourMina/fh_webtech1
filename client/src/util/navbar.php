@@ -101,7 +101,7 @@
                 <li class="nav-item">
                     <div class="d-flex align-items-center">
                         <i class="fa fa-paste me-4 sidebar-icon"></i>
-                        <a class="nav-link" href="?reservations-management">Reservations</a>
+                        <a class="nav-link active" href="?reservations-management">Reservations</a>
 
                     </div>
                 </li>
@@ -109,7 +109,7 @@
                     <div class="d-flex align-items-center">
                         <i class="fa fa-globe me-4 sidebar-icon"></i>
 
-                        <a class="nav-link" href="?news-management">News</a>
+                        <a class="nav-link active" href="?news-management">News</a>
 
 
                     </div>

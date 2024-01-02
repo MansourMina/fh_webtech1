@@ -4,7 +4,7 @@ include_once 'config/dbaccess.php';
 // Function to get all rows from table news
 function getNews()
 {
-    $sql = "SELECT * FROM news";
+    $sql = "SELECT news_id, n.image, category, content, `date`, news_of_the_day, `status`, title, firstname, lastname, member_id FROM news n join members using(member_id)";
     $stmt = db->prepare($sql);
     $stmt->execute();
     $res = $stmt->get_result();

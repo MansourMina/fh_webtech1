@@ -41,11 +41,12 @@ foreach ($all_news as $current_news) {
 
 <body>
     <div class="container">
+
         <?php if ($news_of_the_day != null) : ?>
             <section class="border-bottom pb-4 mb-5">
                 <div class="row gx-5">
                     <div class="col-md-6 mb-4">
-                        <div class="bg-image   ">
+                        <div class="bg-image">
                             <img src="<?= $news_of_the_day['image'] ?>" class="img-fluid " alt="Hotel from outside">
                         </div>
                     </div>
@@ -74,40 +75,40 @@ foreach ($all_news as $current_news) {
             <div class="row gx-lg-5 justify-content-center">
                 <?php foreach ($news as $current_news) : ?>
                     <div class="col-lg-<?= count($news) < 3 ? 6 : 4 ?> col-md-12 mb-5 mt-4 mb-lg-0 mt-lg-0">
+                        <div class=" mb-4 text-center image-container">
+                            <img src="<?= $current_news['image'] ?>" class="img-fluid " />
+                        </div>
+
                         <div>
-                            <div class=" mb-4 text-center image-container">
-                                <img src="<?= $current_news['image'] ?>" class="img-fluid " />
+                            <div class="row mb-3">
+                                <div class="col-6">
+
+
+                                    <p class="category"><i class="fa fa-<?= getIcon($current_news['category']) ?>"></i> <?= $current_news["category"] ?></p>
+                                </div>
+
+                                <div class="col-6 text-end text-secondary">
+                                    <?= $current_news["date"] ?>
+                                </div>
                             </div>
 
                             <div>
-                                <div class="row mb-3">
-                                    <div class="col-6">
-
-
-                                        <p class="category"><i class="fa fa-<?= getIcon($current_news['category']) ?>"></i> <?= $current_news["category"] ?></p>
-                                    </div>
-
-                                    <div class="col-6 text-end text-secondary">
-                                        <?= $current_news["date"] ?>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h5 class="mb-4 fw-bold"> <?= $current_news["title"] ?></h5>
-                                    <p>
-                                        <!-- nl2br übernimmt die newLines von den Daten der Datenbank -->
-                                        <?= nl2br($current_news["content"]) ?>
-                                    </p>
-                                </div>
+                                <h5 class="mb-4 fw-bold"> <?= $current_news["title"] ?></h5>
+                                <p>
+                                    <!-- nl2br übernimmt die newLines von den Daten der Datenbank -->
+                                    <?= nl2br($current_news["content"]) ?>
+                                </p>
                             </div>
-
                         </div>
+
                     </div>
                 <?php endforeach; ?>
 
 
             </div>
         </section>
+
+
     </div>
 </body>
 
