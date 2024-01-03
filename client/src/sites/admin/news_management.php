@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-    <div class="container-fluid p-5">
+    <div class="container-fluid p-5 ">
 
         <ul class="nav nav-tabs" id="myTabs">
             <li class="nav-item tab">

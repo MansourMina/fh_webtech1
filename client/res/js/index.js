@@ -1,3 +1,8 @@
+function openModal(id) {
+  let myModal = new bootstrap.Modal(document.getElementById(id));
+  myModal.show();
+}
+
 function loadFile(event) {
   // Show the selected image for client
   let image = document.getElementById('profile');
@@ -52,4 +57,3 @@ const tooltipTriggerList = document.querySelectorAll(
 const tooltipList = [...tooltipTriggerList].map(
   (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl),
 );
-

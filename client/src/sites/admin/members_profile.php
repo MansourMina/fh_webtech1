@@ -196,7 +196,7 @@ if (isset($_POST["changeMemberEmail"])) {
 
 
                                             </div>
-                                            <div class="ms-auto">
+                                            <div class="ms-auto d-none d-md-block">
                                                 <i class="fa fa-envelope fa-lg"></i>
                                             </div>
                                         </div>

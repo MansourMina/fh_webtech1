@@ -48,7 +48,7 @@ foreach ($all_news as $current_news) {
 
         <?php if ($news_of_the_day != null) : ?>
             <section class="border-bottom pb-4 mb-5">
-                <div class="row gx-5 ">
+                <div class="row gx-5  mx-0">
                     <div class="col-md-6 mb-4">
                         <div class="bg-image">
                             <img src=" <?= $news_of_the_day['image'] ?>" class="img-fluid " alt="Hotel from outside">
@@ -76,7 +76,7 @@ foreach ($all_news as $current_news) {
         <?php endif; ?>
 
         <section>
-            <div class="row gx-lg-5 justify-content-center ">
+            <div class="row gx-lg-5 justify-content-center mx-0">
                 <?php foreach ($news as $current_news) : ?>
                     <div class="col-lg-<?= count($news) < 3 ? 6 : 4 ?> col-md-12 mb-5 mt-4 mb-lg-0 mt-lg-0">
                         <div class=" mb-4 text-center image-container ">

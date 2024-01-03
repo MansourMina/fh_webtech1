@@ -17,9 +17,11 @@ function getIcon($icon)
 <style>
     * {
         font-family: 'Roboto Mono', monospace;
-
     }
-
+    html{
+        padding: 0;
+        margin: 0;
+    }
 
     .btn-full {
         color: white;
@@ -53,13 +55,6 @@ function getIcon($icon)
     .title.dark-mode,
     i.dark-mode {
         color: #ffffff;
-    }
-
-    .page {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
     }
 
     .drk:after {

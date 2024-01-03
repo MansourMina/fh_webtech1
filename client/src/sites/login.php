@@ -86,7 +86,7 @@ if (isset($_POST['login'])) {
         <div style="float:right"><a href="?" style="letter-spacing: -1px;">Go back to website</a></div>
 
       </div>
-      <div class=" col-lg-7 d-none d-lg-block p-0 ">
+      <div class=" col-lg-7 d-none d-lg-block p-0">
         <img src="res/img/login.png" class="img-fluid l-img" alt=" MF Palmside Resort">
 
       </div>

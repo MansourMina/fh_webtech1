@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <?php if (isset($_SESSION['member_id'])) : ?>
             <?php if ($_SESSION['is_admin'] == 1) : ?>
-                <button class="navbar-toggle btn-lg me-5 btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkManagement" aria-controls="offcanvasDarkManagement" aria-expanded="false" aria-label="Toggle sidebar" style="display: block !important;">
+                <button class="navbar-toggle btn-lg me-lg-5 btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkManagement" aria-controls="offcanvasDarkManagement" aria-expanded="false" aria-label="Toggle sidebar" style="display: block !important;">
                     <i class="fa fa-align-left bg-transparent"></i>
                 </button>
             <?php endif; ?>
@@ -40,6 +40,7 @@
                             <?php if ($_SESSION['is_admin'] == 0) : ?>
                                 <a class='dropdown-item nav_title fw-normal' href='?reservations'>Reservations</a>
                             <?php endif; ?>
+                            <a class='dropdown-item nav_title fw-normal btn' onclick="openModal('settingsModal')">Settings</a>
 
                             <div class='dropdown-divider '></div>
                             <a class='dropdown-item nav_title fw-normal' href='?logout'>Logout</a>
@@ -77,7 +78,7 @@
 <!-- Admin Management navigation -->
 <div class="container-fluid">
     <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasDarkManagement" aria-labelledby="offcanvasDarkManagementLabel">
-        <div class="offcanvas-header justify-content-end">
+        <div class="offcanvas-header justify-content-end" data-bs-theme="dark">
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="d-flex row align-items-center text-center mt-2">
@@ -121,8 +122,14 @@
         </div>
     </div>
 </div>
+
+<?php include 'settings.php'; ?>
 <style>
     .nav_title {
         font-weight: 700;
     }
 </style>
+
+<script>
+
+</script>

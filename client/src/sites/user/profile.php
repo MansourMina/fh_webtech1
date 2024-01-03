@@ -136,7 +136,7 @@ if (isset($_POST["changePassword"])) {
                                                 </div>
 
                                             </div>
-                                            <div class="ms-auto">
+                                            <div class="ms-auto d-none d-md-block">
                                                 <i class="fa fa-user fa-lg"></i>
                                             </div>
 
@@ -159,7 +159,7 @@ if (isset($_POST["changePassword"])) {
                                                 </div>
 
                                             </div>
-                                            <div class="ms-auto">
+                                            <div class="ms-auto d-none d-md-block">
                                                 <i class="fa fa-user fa-lg"></i>
                                             </div>
 
@@ -186,7 +186,7 @@ if (isset($_POST["changePassword"])) {
                                                 <?php endif; ?>
 
                                             </div>
-                                            <div class="ms-auto">
+                                            <div class="ms-auto d-none d-md-block">
                                                 <i class="fa fa-envelope fa-lg"></i>
                                             </div>
                                         </div>
@@ -201,7 +201,7 @@ if (isset($_POST["changePassword"])) {
                                                 <p class="mb-0 h5 fw-bold">Date of birth</p>
                                                 <p class="my-2 text-secondary"><?= $_SESSION["date_of_birth"] ?></p>
                                             </div>
-                                            <div class="ms-auto">
+                                            <div class="ms-auto d-none d-md-block">
                                                 <i class="fa fa-calendar fa-lg"></i>
                                             </div>
                                         </div>
@@ -223,7 +223,7 @@ if (isset($_POST["changePassword"])) {
                                                 </div>
 
                                             </div>
-                                            <div class="ms-auto">
+                                            <div class="ms-auto d-none d-md-block">
                                                 <i class="fa fa-phone fa-lg"></i>
                                             </div>
 
@@ -247,7 +247,7 @@ if (isset($_POST["changePassword"])) {
                                                 </div>
 
                                             </div>
-                                            <div class="ms-auto">
+                                            <div class="ms-auto d-none d-md-block">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </div>
 
