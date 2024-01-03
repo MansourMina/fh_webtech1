@@ -78,27 +78,28 @@ if (isset($_POST["saveChanges"])) {
 }
 
 
-// $darkMode = isset($_COOKIE['dark_mode']) ? $_COOKIE['dark_mode'] : false;
+$GLOBALS["darkMode"] = isset($_COOKIE['dark_mode']) ? $_COOKIE['dark_mode'] : false;
+$bodyClass = $GLOBALS["darkMode"] ? 'dark-mode' : '';
 
-// $bodyClass = $darkMode ? 'dark-mode' : '';
+function toggleDarkMode($is_darkMode)
+{
+    $GLOBALS["darkMode"] = $is_darkMode;
+    setcookie('dark_mode', $GLOBALS["darkMode"], time() + (365 * 24 * 60 * 60), '/');
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit;
+}
 
-// function toggleDarkMode()
-// {
-//   $darkMode = isset($_COOKIE['dark_mode']) ? !$_COOKIE['dark_mode'] : true;
-//   setcookie('dark_mode', $darkMode, time() + (365 * 24 * 60 * 60), '/');
-//   header('Location: ' . $_SERVER['HTTP_REFERER']);
-//   exit;
-// }
-
-// if (isset($_POST['toggle_dark_mode'])) {
-//   toggleDarkMode();
-// }
+if (isset($_POST['theme_color'])) {
+    $is_darkMode = $_POST['theme_color'] == 'dark' ? true : false;
+    toggleDarkMode($is_darkMode);
+}
+include_once 'res/theme/pattern.php';
 
 ?>
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="<?= $GLOBALS["darkMode"] ? 'dark':'light' ?>" >
 
 <head>
     <meta charset="UTF-8">
@@ -108,6 +109,7 @@ if (isset($_POST["saveChanges"])) {
 </head>
 
 <body class="<?php echo $bodyClass; ?>">
+
     <?php $showBar ? include_once 'src/util/navbar.php' : "" ?>
     <?php include_once 'src/sites/' . $page ?>
     <?php $showBar ? include_once 'src/util/footer.php' : "" ?>

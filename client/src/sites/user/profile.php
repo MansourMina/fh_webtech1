@@ -81,10 +81,17 @@ if (isset($_POST["changePassword"])) {
             min-height: 12vh;
         }
 
-        .form-control:not([readonly]) {
+        <?php if ($GLOBALS["darkMode"]) : ?>
+         .form-control:not([readonly]) {
+            background-color: white !important;
+            color: black !important;
+        }
+
+        <?php else : ?>.form-control:not([readonly]) {
             background-color: #332D2D;
             color: white;
         }
+        <?php endif; ?>
     </style>
 </head>
 

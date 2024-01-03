@@ -18,7 +18,8 @@ function getIcon($icon)
     * {
         font-family: 'Roboto Mono', monospace;
     }
-    html{
+
+    html {
         padding: 0;
         margin: 0;
     }
@@ -39,24 +40,6 @@ function getIcon($icon)
         color: #15736b;
     }
 
-    body.dark-mode {
-        background-color: #1a1a1a;
-        color: #ffffff;
-    }
-
-    .btn-full.dark-mode {
-        background-color: #003333;
-    }
-
-    .btn.dark-mode {
-        border-radius: 0;
-    }
-
-    .title.dark-mode,
-    i.dark-mode {
-        color: #ffffff;
-    }
-
     .drk:after {
         content: "";
         display: block;
@@ -69,4 +52,8 @@ function getIcon($icon)
         opacity: 0.6;
         z-index: 1;
     }
+
+    /*  Dark mode  */
+   
+   
 </style>

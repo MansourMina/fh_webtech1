@@ -3,7 +3,7 @@
         color: grey;
     }
 </style>
-<nav class="navbar navbar-expand-xl  p-4 bg-white sticky-top ">
+<nav class="navbar navbar-expand-xl  p-4 sticky-top <?= $navbar ?> " 
     <div class="container-fluid">
         <?php if (isset($_SESSION['member_id'])) : ?>
             <?php if ($_SESSION['is_admin'] == 1) : ?>
@@ -13,7 +13,7 @@
             <?php endif; ?>
         <?php endif; ?>
         <a class="navbar-brand" href="?">
-            <img src="res/img/logo.png" alt="MF Palmside Resort" width="200">
+            <img src="res/img/<?= $navbar_img?>" alt="MF Palmside Resort" width="200">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -77,8 +77,8 @@
 
 <!-- Admin Management navigation -->
 <div class="container-fluid">
-    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasDarkManagement" aria-labelledby="offcanvasDarkManagementLabel">
-        <div class="offcanvas-header justify-content-end" data-bs-theme="dark">
+    <div class="offcanvas offcanvas-start " tabindex="-1" id="offcanvasDarkManagement" aria-labelledby="offcanvasDarkManagementLabel">
+        <div class="offcanvas-header justify-content-end" >
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="d-flex row align-items-center text-center mt-2">

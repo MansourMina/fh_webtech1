@@ -23,12 +23,11 @@
     <div class="container  ">
 
         <div class="row no-gutters shadow-box " style="min-height: 40vh;">
-
             <div class="col-lg-7 ">
                 <img src="src/images/accomodation/room_2.jpg" class="img-fluid l-img" alt=" MF Palmside Resort">
 
             </div>
-            <div class="col-lg-5 bg-white">
+            <div class="col-lg-5 ">
                 <div class="mb-2">
                     <i class="fa fa-star text-warning"></i>
                     <span class="fw-bold ">Top Pick</span>
@@ -65,7 +64,7 @@
                 <img src="src/images/accomodation/room_3.jpg" class="img-fluid l-img" alt=" MF Palmside Resort">
 
             </div>
-            <div class="col-lg-5 bg-white">
+            <div class="col-lg-5 ">
 
 
 
@@ -95,7 +94,7 @@
                 <img src="src/images/accomodation/room_4.jpg" class="img-fluid l-img" alt=" MF Palmside Resort">
 
             </div>
-            <div class="col-lg-5 bg-white">
+            <div class="col-lg-5 ">
 
 
                 <h5 class="fw-bolder">Elegant Suite with Private Balcony</h5>
@@ -124,7 +123,7 @@
                 <img src="src/images/accomodation/room_1.jpg" class="img-fluid l-img" alt=" MF Palmside Resort">
 
             </div>
-            <div class="col-lg-5 bg-white">
+            <div class="col-lg-5 ">
 
 
 

@@ -45,7 +45,7 @@ if (isset($_POST['login'])) {
 <body>
   <div class="container register ">
     <div class="row no-gutters shadow-box " style="min-height: 85vh;">
-      <div class="col-lg-5 bg-white p-5 align-self-center">
+      <div class="col-lg-5  p-5 align-self-center">
         <form action="" method="post">
 
           <div class="formInputs">
