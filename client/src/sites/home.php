@@ -31,7 +31,7 @@
 
 <div class="card my-5 py-5 text-center" style="align-items:center; ">
   <div class="card-body col-12  col-lg-12 col-xl-6 mx-auto text-center">
-    <h6 class="card-subtitle mb-2 text-body-secondary">5-Star Beachfront Hotel in Playa El Aqua, Venezuela</h6>
+    <p class="card-subtitle mb-2 text-body-secondary">5-Star Beachfront Hotel in Playa El Aqua, Venezuela</p>
     <h1 class="card-title">Welcome to Paradise</h1>
     <p class="card-text mt-3">Escape to a tropical paradise at our luxurious 5-star hotel nestled amidst swaying palm trees in Playa El Aqua, Venezuela.
       Experience the epitome of relaxation and indulgence as you unwind in a setting that combines natural beauty with world-class hospitality.</p>
@@ -50,7 +50,7 @@
         <div class="position-relative mt-5 d-block my-2">
           <div class="justify-content-center px-5 row g-0">
             <div class="col-12  col-lg-6 col-xl-5  text-accomodation">
-              <h5 class="fw-bolder">Deluxe Ocean-View Suite</h5>
+              <p class="fs-5 fw-bolder">Deluxe Ocean-View Suite</p>
               <p>Wake up to the gentle sound of waves in our Deluxe Ocean-View Suite. Enjoy breathtaking panoramic views of the Caribbean Sea from the comfort of your own private haven.</p>
             </div>
             <div class="col-12  col-lg-6 col-xl-4">
@@ -68,7 +68,7 @@
         <div class="position-relative mt-5 d-block my-2">
           <div class=" justify-content-center px-5 row g-0">
             <div class="col-12  col-lg-6 col-xl-5 text-accomodation ">
-              <h5 class="fw-bolder">Family-Friendly Accommodation</h5>
+              <p class="fs-5 fw-bolder">Family-Friendly Accommodation</h5>
               <p>Our spacious Family-Friendly Rooms are designed with your loved ones in mind. Ideal for a memorable family vacation, these rooms offer the perfect blend of comfort and convenience.</p>
             </div>
             <div class="col-12  col-lg-6 col-xl-4">
@@ -87,7 +87,7 @@
         <div class="position-relative mt-5 d-block my-2">
           <div class="  justify-content-center px-5 row g-0">
             <div class="col-12  col-lg-6 col-xl-5 text-accomodation ">
-              <h5 class="fw-bolder">Elegant Suite with Private Balcony</h5>
+              <p class="fs-5 fw-bolder">Elegant Suite with Private Balcony</h5>
               <p>Discover elegance and luxury in our Suite with Private Balcony. This room features a spacious balcony where you can savor your morning coffee while taking in the stunning views of the coastline.</p>
             </div>
             <div class="col-12  col-lg-6 col-xl-4">
@@ -108,7 +108,7 @@
         <div class=" mt-5 d-block my-2">
           <div class="  justify-content-center px-5 row g-0">
             <div class="col-12  col-lg-6 col-xl-5 text-accomodation">
-              <h5 class="fw-bolder">Classic Comfort and Timeless Elegance</h5>
+              <p class="fs-5 fw-bolder">Classic Comfort and Timeless Elegance</h5>
               <p>Experience classic comfort and timeless elegance in our Classic Room. This well-appointed room offers a cozy retreat with all the essential amenities for a restful stay, providing a touch of traditional charm.</p>
             </div>
             <div class="col-12  col-lg-6 col-xl-4">
@@ -173,7 +173,6 @@
   .carousel-control-next,
   .carousel-control-prev {
     align-items: flex-start;
-    color: #15736b;
   }
 </style>
 

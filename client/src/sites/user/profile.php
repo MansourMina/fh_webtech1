@@ -33,10 +33,10 @@ if (isset($_POST["changePassword"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="description" content="Profile - Manage your account details and preferences with ease.">
     <style>
         .border-profile {
-            border-left: 5px solid #15736b;
+            border-left: 5px solid <?= $GLOBALS["darkMode"] ? 'white' : '#15736b' ?>;
         }
 
         .profile-image-container {
@@ -81,8 +81,13 @@ if (isset($_POST["changePassword"])) {
             min-height: 12vh;
         }
 
-        <?php if ($GLOBALS["darkMode"]) : ?>
-         .form-control:not([readonly]) {
+        #profile-img {
+            height: 200px;
+            width: 200px;
+            object-fit: cover;
+        }
+
+        <?php if ($GLOBALS["darkMode"]) : ?>.form-control:not([readonly]) {
             background-color: white !important;
             color: black !important;
         }
@@ -91,6 +96,7 @@ if (isset($_POST["changePassword"])) {
             background-color: #332D2D;
             color: white;
         }
+
         <?php endif; ?>
     </style>
 </head>
@@ -106,7 +112,7 @@ if (isset($_POST["changePassword"])) {
                         <div class="card mb-4 border-0">
                             <div class="card-body text-center">
                                 <div class="image-container">
-                                    <img src="<?php echo isset($_SESSION["image"]) ? $_SESSION["image"] : 'src/images/default.png' ?>" alt="Profile Image" class="rounded-circle" width="200" height="200" id="profile">
+                                    <img src="<?php echo isset($_SESSION["image"]) ? $_SESSION["image"] : 'src/images/default.png' ?>" alt="Profile Image" class="rounded-circle" id="profile-img">
                                     <label class="overlay">
                                         Change Image
                                         <input type="file" name="picture" accept="image/jpeg,image/png" class="d-none" onchange="loadFile(event)">
@@ -138,7 +144,7 @@ if (isset($_POST["changePassword"])) {
                                                 <div class="input-group ">
                                                     <input class="form-control my-2 text-secondary " type="text" value="<?php echo "{$_SESSION['firstname']}" ?>" id="firstnameField" name="firstname" aria-label="Change firstname" aria-describedby="firstname-button" readonly>
                                                     <button class="btn p-0 ms-4" type="button" id="firstnameButton" onclick="toggleReadOnly('firstnameButton', 'firstnameField', '<?php echo $_SESSION['firstname']; ?>')"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                            <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
+                                                            <path fill="<?= $GLOBALS["darkMode"] ? 'white' : 'black' ?>" d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
                                                         </svg></button>
                                                 </div>
 
@@ -161,7 +167,7 @@ if (isset($_POST["changePassword"])) {
                                                 <div class="input-group ">
                                                     <input class="form-control my-2 text-secondary " type="text" value="<?php echo "{$_SESSION['lastname']}" ?>" id="lastnameField" name="lastname" aria-label="Change lastname" aria-describedby="lastname-button" readonly>
                                                     <button class="btn p-0 ms-4" type="button" id="lastnameButton" onclick="toggleReadOnly('lastnameButton', 'lastnameField', '<?php echo $_SESSION['lastname']; ?>')"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                            <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
+                                                            <path fill="<?= $GLOBALS["darkMode"] ? 'white' : 'black' ?>" d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
                                                         </svg></button>
                                                 </div>
 
@@ -187,7 +193,7 @@ if (isset($_POST["changePassword"])) {
                                                     <div class="input-group ">
                                                         <input class="form-control my-2 text-secondary " type="email" value="<?php echo $_SESSION["email"] ?>" id="emailField" name="email" aria-label="Change email" aria-describedby="member_email-button" readonly>
                                                         <button class="btn p-0 ms-4" type="button" id="emailButton" onclick="toggleReadOnly('emailButton', 'emailField', '<?php echo $_SESSION['email']; ?>')"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                                <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
+                                                                <path fill="<?= $GLOBALS["darkMode"] ? 'white' : 'black' ?>" d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
                                                             </svg></button>
                                                     </div>
                                                 <?php endif; ?>
@@ -225,7 +231,7 @@ if (isset($_POST["changePassword"])) {
                                                 <div class="input-group ">
                                                     <input class="form-control my-2 text-secondary " type="number" value="<?php echo "{$_SESSION["phone_number"]}" ?>" id="phoneField" name="phone_number" aria-label="Change Phone number" aria-describedby="phoneButton" readonly>
                                                     <button class="btn p-0 ms-4" type="button" id="phoneButton" onclick="toggleReadOnly('phoneButton', 'phoneField', '<?php echo $_SESSION['phone_number']; ?>')"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                            <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
+                                                            <path fill="<?= $GLOBALS["darkMode"] ? 'white' : 'black' ?>" d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
                                                         </svg></button>
                                                 </div>
 
@@ -246,9 +252,9 @@ if (isset($_POST["changePassword"])) {
                                                 <p class="mb-0 h5 fw-bold">Password</p>
                                                 <div class="input-group ">
                                                     <input class="form-control my-2 text-secondary " type="password" value="<?php echo "{$_SESSION["password"]}" ?>" id="passwordField" aria-label="Change Password" aria-describedby="passwordButton" readonly>
-                                                    <button class="btn p-0 ms-4" type="button" id="passwordButton" onclick="toggleReadOnly('passwordButton', 'passwordField', '<?php echo $_SESSION['password']; ?>')">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                            <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
+                                                    <button class="btn p-0 ms-4" type="button" id="passwordButton" onclick="openModal('passwordModal')">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                                            <path fill="<?= $GLOBALS["darkMode"] ? 'white' : 'black' ?>" d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
                                                         </svg>
                                                     </button>
                                                 </div>
@@ -280,16 +286,16 @@ if (isset($_POST["changePassword"])) {
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script>
             $(document).ready(function() {
-                $("#exampleModal").modal('show');
+                $("#passwordModal").modal('show');
             });
         </script>
     <?php endif; ?>
-    <div class="modal " id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal " id="passwordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form action="" method="post">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Change Password</h1>
+                        <h1 class="modal-title fs-5" id="passwordModalLabel">Change Password</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

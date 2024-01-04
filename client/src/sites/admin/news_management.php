@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin News Management - Effectively manage the news of the hotel">
     <style>
         .tab-content>div {
             display: none;
@@ -43,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .nav-link:hover {
-            color: #15736b;
+            color: <?= $GLOBALS["darkMode"] ? 'white' : '#15736b' ?>;
         }
 
         .datatable-image {
@@ -75,8 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .form-switch .form-check-input:checked {
-            background-color: #15736b;
-            border-color: #15736b;
+            background-color: <?= $GLOBALS["darkMode"] ? 'white' : '#15736b' ?>;
+            border-color: <?= $GLOBALS["darkMode"] ? 'white' : '#15736b' ?>;
         }
 
         .dark-overlay {
@@ -102,6 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 "initComplete": function() {
 
                     $('#myDataTable_filter input').attr('placeholder', 'Search news');
+                    $('#myDataTable_filter input').attr('id', 'searchNews');
                 }
             });
         });
@@ -146,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                             <tr class="<?= $current_news["status"] == 0 ? 'table-secondary fw-light' : '' ?>">
                                 <td scope="row">
-                                    <div class="d-flex align-items-center <?= $current_news["status"] ? 'fw-bold' : 'fw-light' ?>"><?= $i ?> <i data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="mf-tooltip" data-bs-title="Preview" style="cursor: pointer;" class="fa fa-eye fa-lg ms-5 mt-1" onclick="openModal('exampleModal<?= $i ?>')"></i></div>
+                                    <div class="d-flex align-items-center <?= $current_news["status"] ? 'fw-bold' : 'fw-light' ?>"><?= $i ?> <i data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="mf-tooltip" data-bs-title="Preview" style="cursor: pointer;" class="fa fa-eye fa-lg ms-5 mt-1" onclick="openModal('newsModal<?= $i ?>')"></i></div>
                                 </td>
                                 <th>
                                     <div class="<?= $current_news["status"] == 0 ? 'dark-overlay drk' : '' ?>"><img src="<?= $current_news["image"] ?>" class="datatable-image "></div>
@@ -175,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </td>
 
                             </tr>
-                            <div class="modal" id="exampleModal<?= $i ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal" id="newsModal<?= $i ?>" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg modal-dialog-scrollable">
                                     <div class="modal-content">
                                         <div class="modal-header ">

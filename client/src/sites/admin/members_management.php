@@ -26,6 +26,7 @@ if (isset($_GET['members'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin News Management - Keep your audience engaged with the latest updates and stories.">
     <style>
         .notFound {
             min-height: 69vh;

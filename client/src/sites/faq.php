@@ -4,10 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Frequently Asked Questions">
   <style>
     .faq-border {
       border-radius: 5%;
-      border-bottom: 1.5px solid #15736b;
+      border-bottom: 1.5px solid <?= $GLOBALS["darkMode"] ? 'white' : '#15736b' ?>;
     }
   </style>
 </head>

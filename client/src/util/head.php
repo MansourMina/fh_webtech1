@@ -26,19 +26,21 @@ function getIcon($icon)
 
     .btn-full {
         color: white;
-        background-color: #15736b;
-    }
-
-    .btn {
-        border-radius: 0;
+        background-color: <?= $GLOBALS["darkMode"] ? 'white' : '#15736b' ?>;
     }
 
     .title,
     i,
     svg,
     .category {
-        color: #15736b;
+        color: <?= $GLOBALS["darkMode"] ? 'white' : '#15736b' ?>;
     }
+
+    .btn {
+        border-radius: 0;
+    }
+
+
 
     .drk:after {
         content: "";
@@ -54,6 +56,4 @@ function getIcon($icon)
     }
 
     /*  Dark mode  */
-   
-   
 </style>

@@ -61,8 +61,9 @@ if (isset($_POST["register"])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="res/css/login-register.css">
+  <meta name="description" content="Create an MF Palmside Resort account">
 
+  <link rel="stylesheet" href="res/css/login-register.css">
 
 </head>
 

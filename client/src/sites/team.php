@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The MF Palmside Resort Team">
     <style>
         .team-card {
             min-height: 38vh;
@@ -37,7 +38,7 @@
         <p class="text-secondary my-4">Join us at <span class="fw-bold">MF Palmside Resort</span>, where our passionate and skilled team is here to make your stay unforgettable. With a commitment to excellence, our experienced staff is dedicated to creating a special experience just for you. Experience the perfect mix of friendliness and efficiency that makes our team the heart of Palmside – your ultimate destination for exceptional hospitality.</p>
         <div class="row mt-5">
             <div class="col-xl-6 col-md-6 mb-5">
-                <div class=" rounded shadow-lg py-5 px-4 team-card">
+                <div class=" rounded shadow-<?= $GLOBALS["darkMode"] ? 'sm' : 'lg' ?> py-5 px-4 team-card">
                     <img src="res/img/filip.jpg" alt="" width="100" class=" img-thumbnail mb-3  ">
                     <h5 class="mb-0">Filip Lazarevic</h5><span class="small text-uppercase text-muted">CEO</span>
                     <ul class="social mb-0 list-inline mt-3">
@@ -49,7 +50,7 @@
                 </div>
             </div>
             <div class="col-xl-6 col-md-6 mb-5">
-                <div class=" rounded shadow-lg py-5 px-4 team-card">
+                <div class=" rounded shadow-<?= $GLOBALS["darkMode"] ? 'sm' : 'lg' ?> py-5 px-4 team-card">
                     <img src="res/img/mina.jpg" alt="" width="100" class=" mb-3 img-thumbnail ">
                     <h5 class="mb-0">Mina Mansour</h5><span class="small text-uppercase text-muted">CEO</span>
                     <ul class="social mb-0 list-inline mt-3">

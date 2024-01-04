@@ -37,7 +37,7 @@ if (isset($_POST['login'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="description" content="Login into an MF Palmside Resort account">
   <link rel="stylesheet" href="res/css/login-register.css">
 
 </head>

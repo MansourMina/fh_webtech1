@@ -5,7 +5,7 @@ function openModal(id) {
 
 function loadFile(event) {
   // Show the selected image for client
-  let image = document.getElementById('profile');
+  let image = document.getElementById('profile-img');
   image.src = URL.createObjectURL(event.target.files[0]);
 
   // Update the profile image and enable the save butto
@@ -18,15 +18,9 @@ function toggleReadOnly(buttonName, inputName, value) {
   let button = document.getElementById(buttonName);
 
   // Toggle edit icon when clicked, except for the passwordButton
-  if (buttonName != 'passwordButton') {
-    if (input.readOnly) {
-      button.style.display = 'none';
-      input.readOnly = !input.readOnly;
-    }
-  } else {
-    // Otherwise show modal for changing the password
-    let myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-    myModal.show();
+  if (input.readOnly) {
+    button.style.display = 'none';
+    input.readOnly = !input.readOnly;
   }
 
   // Enable save button if any changes happen
@@ -57,5 +51,3 @@ const tooltipTriggerList = document.querySelectorAll(
 const tooltipList = [...tooltipTriggerList].map(
   (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl),
 );
-
-

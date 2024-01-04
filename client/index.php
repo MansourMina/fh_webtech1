@@ -6,8 +6,6 @@ $title = 'MF Palmside Resort';
 $pageFound = false;
 $showBar = true;
 
-
-
 include_once 'model/members.php';
 $role = getRole();
 
@@ -99,11 +97,12 @@ include_once 'res/theme/pattern.php';
 
 
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="<?= $GLOBALS["darkMode"] ? 'dark':'light' ?>" >
+<html lang="en" data-bs-theme="<?= $GLOBALS["darkMode"] ? 'dark' : 'light' ?>">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MF Palmside Resort">
     <title><?php echo $title ?></title>
     <?php require_once 'src/util/head.php' ?>
 </head>
