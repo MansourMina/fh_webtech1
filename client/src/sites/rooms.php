@@ -24,7 +24,7 @@
 
         <div class="row no-gutters shadow-box " style="min-height: 40vh;">
             <div class="col-lg-7 ">
-                <img src="src/images/accomodation/room_2.jpg" class="img-fluid l-img" alt=" MF Palmside Resort">
+                <img src="src/images/accomodation/room_2.webp" class="img-fluid l-img" alt=" MF Palmside Resort">
 
             </div>
             <div class="col-lg-5 ">
@@ -61,7 +61,7 @@
         <div class="row no-gutters shadow-box " style="min-height: 40vh;">
 
             <div class="col-lg-7 ">
-                <img src="src/images/accomodation/room_3.jpg" class="img-fluid l-img" alt=" MF Palmside Resort">
+                <img src="src/images/accomodation/room_3.webp" class="img-fluid l-img" alt=" MF Palmside Resort">
 
             </div>
             <div class="col-lg-5 ">
@@ -91,7 +91,7 @@
         <div class="row no-gutters shadow-box " style="min-height: 40vh;">
 
             <div class="col-lg-7 ">
-                <img src="src/images/accomodation/room_4.jpg" class="img-fluid l-img" alt=" MF Palmside Resort">
+                <img src="src/images/accomodation/room_4.webp" class="img-fluid l-img" alt=" MF Palmside Resort">
 
             </div>
             <div class="col-lg-5 ">
@@ -120,7 +120,7 @@
         <div class="row no-gutters shadow-box " style="min-height: 40vh;">
 
             <div class="col-lg-7 ">
-                <img src="src/images/accomodation/room_1.jpg" class="img-fluid l-img" alt=" MF Palmside Resort">
+                <img src="src/images/accomodation/room_1.webp" class="img-fluid l-img" alt=" MF Palmside Resort">
 
             </div>
             <div class="col-lg-5 ">

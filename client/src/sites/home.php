@@ -1,11 +1,11 @@
 <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active drk " data-bs-interval="4000">
-      <img class="d-block w-100 " src="src/images/outer/outer_1.jpg" alt="Hotel from outside">
+      <img class="d-block w-100 " src="src/images/outer/outer_1.webp" alt="Hotel from outside">
 
     </div>
     <div class="carousel-item drk " data-bs-interval="4000">
-      <img class="d-block w-100 " src="src/images/outer/outer_2.jpg" alt="Hotel from outside">
+      <img class="d-block w-100 " src="src/images/outer/outer_2.webp" alt="Hotel from outside">
     </div>
   </div>
   <div class="carousel-caption text-white">
@@ -46,7 +46,7 @@
 
     <div class="carousel-inner ">
       <div class="carousel-item active">
-        <img src="src/images/accomodation/room_2.jpg" class="d-block w-100 " alt="Deluxe Ocean-View Suite">
+        <img src="src/images/accomodation/room_2.webp" class="d-block w-100 " alt="Deluxe Ocean-View Suite">
         <div class="position-relative mt-5 d-block my-2">
           <div class="justify-content-center px-5 row g-0">
             <div class="col-12  col-lg-6 col-xl-5  text-accomodation">
@@ -64,7 +64,7 @@
         </div>
       </div>
       <div class="carousel-item">
-        <img src="src/images/accomodation/room_3.jpg" class="d-block w-100 " alt="Family-Friendly Accommodation">
+        <img src="src/images/accomodation/room_3.webp" class="d-block w-100 " alt="Family-Friendly Accommodation">
         <div class="position-relative mt-5 d-block my-2">
           <div class=" justify-content-center px-5 row g-0">
             <div class="col-12  col-lg-6 col-xl-5 text-accomodation ">
@@ -83,7 +83,7 @@
 
       </div>
       <div class="carousel-item">
-        <img src="src/images/accomodation/room_4.jpg" class="d-block w-100 " alt="Elegant Suite with Private Balcony">
+        <img src="src/images/accomodation/room_4.webp" class="d-block w-100 " alt="Elegant Suite with Private Balcony">
         <div class="position-relative mt-5 d-block my-2">
           <div class="  justify-content-center px-5 row g-0">
             <div class="col-12  col-lg-6 col-xl-5 text-accomodation ">
@@ -103,7 +103,7 @@
 
       </div>
       <div class="carousel-item">
-        <img src="src/images/accomodation/room_1.jpg" class="d-block w-100 " alt="Classic Comfort and Timeless Elegance">
+        <img src="src/images/accomodation/room_1.webp" class="d-block w-100 " alt="Classic Comfort and Timeless Elegance">
 
         <div class=" mt-5 d-block my-2">
           <div class="  justify-content-center px-5 row g-0">

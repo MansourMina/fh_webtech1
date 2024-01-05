@@ -104,7 +104,7 @@ if (isset($_POST["changeMemberEmail"])) {
 
                             <div class="card-body text-center">
                                 <div class="image-container">
-                                    <img src="<?php echo isset($member["image"]) ? $member["image"] : 'src/images/default.png' ?>" alt="Profile Image" class="rounded-circle img-circle" width="200" height="200" id="profile">
+                                    <img src="<?php echo isset($member["image"]) ? $member["image"] : 'res/img/default.png' ?>" alt="Profile Image" class="rounded-circle img-circle" width="200" height="200" id="profile">
                                 </div>
 
                                 <h5 class="my-3 mb-1 fw-bold"><?php echo "{$member['firstname']} {$member['lastname']}" ?></h5>

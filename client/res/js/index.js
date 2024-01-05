@@ -1,3 +1,10 @@
+const tooltipTriggerList = document.querySelectorAll(
+  '[data-bs-toggle="tooltip"]',
+);
+const tooltipList = [...tooltipTriggerList].map(
+  (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl),
+);
+
 function openModal(id) {
   let myModal = new bootstrap.Modal(document.getElementById(id));
   myModal.show();
@@ -44,10 +51,3 @@ function closePassword() {
   oldPasswordField.value = '';
   newPasswordField.value = '';
 }
-
-const tooltipTriggerList = document.querySelectorAll(
-  '[data-bs-toggle="tooltip"]',
-);
-const tooltipList = [...tooltipTriggerList].map(
-  (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl),
-);

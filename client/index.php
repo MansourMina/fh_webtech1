@@ -1,4 +1,9 @@
 <?php
+// Enable when We want to convert images into webp
+
+// include_once 'res/php/convert_to_webp.php';
+
+
 ob_start();
 session_start();
 $page = 'home.php';
@@ -9,29 +14,29 @@ $showBar = true;
 include_once 'model/members.php';
 $role = getRole();
 
-if ($role != 2)  include_once 'src/util/discount.php';
+if ($role != 2) include_once 'src/util/discount.php';
 
 // role 0 -> for anonyms
 // role 1 -> for logged users
-// role 2 ->  for admin
+// role 2 -> for admin
 $pages = [
-    "faq" => ["file" => "faq.php", "title" => "FAQ", "role" => [0, 1, 2],  "showBar" => true,],
-    "impressum" => ["file" => "impressum.php", "title" => "Impressum", "role" => [0, 1, 2],  "showBar" => true],
-    "login" => ["file" => "login.php", "title" => "Login", "role" => [0],  "showBar" => false],
-    "register" => ["file" => "register.php", "title" => "Register", "role" => [0],  "showBar" => false],
-    "logout" => ["file" => "../actions/logout.php", "title" => "Logout", "role" => [1, 2],  "showBar" => false],
-    "profile" => ["file" => "user/profile.php", "title" => "Profile", "role" => [1, 2],  "showBar" => true],
-    "service" => ["file" => "service.php", "title" => "Service", "role" => [0, 1, 2],  "showBar" => true],
-    "team" => ["file" => "team.php", "title" => "Team", "role" => [0, 1, 2],  "showBar" => true],
-    "news" => ["file" => "news.php", "title" => "News", "role" => [0, 1, 2],  "showBar" => true],
-    "rooms" => ["file" => "rooms.php", "title" => "Rooms", "role" => [0, 1, 2],  "showBar" => true],
-    "reservations" => ["file" => "user/reservations.php", "title" => "Reservations", "role" => [1],  "showBar" => true],
-    "book" => ["file" => "user/book.php", "title" => "Booking", "role" => [1],  "showBar" => true, "to_login" => true],
-    "404" => ["file" => "404.php", "title" => "Page not Found", "role" => [0, 1, 2],  "showBar" => false],
-    "members" => ["file" => "admin/members_management.php", "title" => "Members Management", "role" => [2],  "showBar" => true],
-    "news-management" => ["file" => "admin/news_management.php", "title" => "News Management", "role" => [2],  "showBar" => true],
-    "reservations-management" => ["file" => "admin/reservations_management.php", "title" => "Reservations Management", "role" => [2],  "showBar" => true],
-    "members-profile" => ["file" => "admin/members_profile.php", "title" => "Members Profile", "role" => [2],  "showBar" => true]
+    "faq" => ["file" => "faq.php", "title" => "FAQ", "role" => [0, 1, 2], "showBar" => true,],
+    "impressum" => ["file" => "impressum.php", "title" => "Impressum", "role" => [0, 1, 2], "showBar" => true],
+    "login" => ["file" => "login.php", "title" => "Login", "role" => [0], "showBar" => false],
+    "register" => ["file" => "register.php", "title" => "Register", "role" => [0], "showBar" => false],
+    "logout" => ["file" => "../actions/logout.php", "title" => "Logout", "role" => [1, 2], "showBar" => false],
+    "profile" => ["file" => "user/profile.php", "title" => "Profile", "role" => [1, 2], "showBar" => true],
+    "service" => ["file" => "service.php", "title" => "Service", "role" => [0, 1, 2], "showBar" => true],
+    "team" => ["file" => "team.php", "title" => "Team", "role" => [0, 1, 2], "showBar" => true],
+    "news" => ["file" => "news.php", "title" => "News", "role" => [0, 1, 2], "showBar" => true],
+    "rooms" => ["file" => "rooms.php", "title" => "Rooms", "role" => [0, 1, 2], "showBar" => true],
+    "reservations" => ["file" => "user/reservations.php", "title" => "Reservations", "role" => [1], "showBar" => true],
+    "book" => ["file" => "user/book.php", "title" => "Booking", "role" => [1], "showBar" => true, "to_login" => true],
+    "404" => ["file" => "404.php", "title" => "Page not Found", "role" => [0, 1, 2], "showBar" => false],
+    "members" => ["file" => "admin/members_management.php", "title" => "Members Management", "role" => [2], "showBar" => true],
+    "news-management" => ["file" => "admin/news_management.php", "title" => "News Management", "role" => [2], "showBar" => true],
+    "reservations-management" => ["file" => "admin/reservations_management.php", "title" => "Reservations Management", "role" => [2], "showBar" => true],
+    "members-profile" => ["file" => "admin/members_profile.php", "title" => "Members Profile", "role" => [2], "showBar" => true]
 ];
 
 foreach ($pages as $name => $value) {
@@ -105,6 +110,7 @@ include_once 'res/theme/pattern.php';
     <meta name="description" content="MF Palmside Resort">
     <title><?php echo $title ?></title>
     <?php require_once 'src/util/head.php' ?>
+
 </head>
 
 <body class="<?php echo $bodyClass; ?>">

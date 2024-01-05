@@ -2,7 +2,7 @@
     <div class="row " style="min-height: 40vh">
         <div class="col-12 col-lg-3 col-md-6 ">
             <div class="card ">
-                <img src="src/images/services/limousine.jpg" class="card-img-top " alt="Limousine">
+                <img src="src/images/services/limousine.webp" class="card-img-top " alt="Limousine">
                 <div class="card-body px-0">
                     <p class="fs-5 card-title">Limousine service</h5>
                 </div>
@@ -13,7 +13,7 @@
         </div>
         <div class="col-12 col-lg-3 col-md-6 ">
             <div class="card ">
-                <img src="src/images/services/spa.jpg" class="card-img-top " alt="Hotel's Spa">
+                <img src="src/images/services/spa.webp" class="card-img-top " alt="Hotel's Spa">
                 <div class="card-body px-0">
                     <p class="fs-5 card-title">Hotel's Spa</h5>
                 </div>
@@ -25,7 +25,7 @@
         </div>
         <div class="col-12 col-lg-3 col-md-6 ">
             <div class="card">
-                <img src="src/images/services/fitness.jpg" class="card-img-top " alt="Fitness">
+                <img src="src/images/services/fitness.webp" class="card-img-top " alt="Fitness">
                 <div class="card-body px-0">
                     <p class="fs-5 card-title">Fitness Center</h5>
                 </div>
@@ -37,7 +37,7 @@
         </div>
         <div class="col-12 col-lg-3 col-md-6 ">
             <div class="card ">
-                <img src="src/images/services/bar.jpg" class="card-img-top " alt="Limousine">
+                <img src="src/images/services/bar.webp" class="card-img-top " alt="Limousine">
                 <div class="card-body px-0">
                     <p class="fs-5 card-title">Bar</h5>
                 </div>

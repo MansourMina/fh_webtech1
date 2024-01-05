@@ -1,3 +1,6 @@
+<?php include 'settings.php'; ?>
+<?php include 'changePassword.php'; ?>
+
 <style>
     .sidebar-icon {
         color: grey;
@@ -8,7 +11,12 @@
         width: 100px;
         object-fit: cover;
     }
+
+    .nav_title {
+        font-weight: 700;
+    }
 </style>
+
 <nav class="navbar navbar-expand-xl  p-4 sticky-top <?= $navbar ?> " <div class="container-fluid">
     <?php if (isset($_SESSION['member_id'])) : ?>
         <?php if ($_SESSION['is_admin'] == 1) : ?>
@@ -88,7 +96,7 @@
         </div>
         <div class="d-flex row align-items-center text-center mt-2">
             <div>
-                <img src="<?php echo $_SESSION["image"] ? $_SESSION["image"] : 'src/images/default.png' ?>" alt="Profile Image" class="rounded-circle" id="sidebar-profile">
+                <img src="<?php echo $_SESSION["image"] ? $_SESSION["image"] : 'res/img/default.png' ?>" alt="Profile Image" class="rounded-circle" id="sidebar-profile">
 
 
             </div>
@@ -131,14 +139,4 @@
         </div>
     </div>
 </div>
-
-<?php include 'settings.php'; ?>
-<style>
-    .nav_title {
-        font-weight: 700;
-    }
-</style>
-
-<script>
-
-</script>
+<!-- <script src="res/js/index.js"> </script> -->
