@@ -96,7 +96,7 @@
         </div>
         <div class="d-flex row align-items-center text-center mt-2">
             <div>
-                <img src="<?php echo $_SESSION["image"] ? $_SESSION["image"] : 'res/img/default.png' ?>" alt="Profile Image" class="rounded-circle" id="sidebar-profile">
+                <img src="<?php echo $_SESSION["image"] ? $_SESSION["image"] : 'res/img/default.jpg' ?>" alt="Profile Image" class="rounded-circle" id="sidebar-profile">
 
 
             </div>

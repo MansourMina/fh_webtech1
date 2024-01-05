@@ -54,7 +54,7 @@
               <p>Wake up to the gentle sound of waves in our Deluxe Ocean-View Suite. Enjoy breathtaking panoramic views of the Caribbean Sea from the comfort of your own private haven.</p>
             </div>
             <div class="col-12  col-lg-6 col-xl-4">
-              <a class="btn btn-lg mx-3 my-2" aria-current="page" href="?rooms">More Details</a>
+              <a class="btn btn-lg mx-3 my-2 btn-outline-<?= $GLOBALS["darkMode"] ? 'light' : 'dark' ?>" aria-current="page" href="?rooms">More Details</a>
               <?php if ((isset($_SESSION['member_id']) && $_SESSION['is_admin'] == 0) || !isset($_SESSION['member_id'])) : ?>
 
                 <a class="btn btn-lg btn-full my-2" href="?book=<?php echo "Deluxe Ocean-View Suite"; ?>">Book Now</a>
@@ -72,7 +72,7 @@
               <p>Our spacious Family-Friendly Rooms are designed with your loved ones in mind. Ideal for a memorable family vacation, these rooms offer the perfect blend of comfort and convenience.</p>
             </div>
             <div class="col-12  col-lg-6 col-xl-4">
-              <a class="btn btn-lg  mx-3 my-2" aria-current="page" href="?rooms">More Details</a>
+              <a class="btn btn-lg  mx-3 my-2 btn-outline-<?= $GLOBALS["darkMode"] ? 'light' : 'dark' ?>" aria-current="page" href="?rooms">More Details</a>
               <?php if ((isset($_SESSION['member_id']) && $_SESSION['is_admin'] == 0) || !isset($_SESSION['member_id'])) : ?>
                 <a class="btn btn-lg btn-full my-2" href="?book=<?php echo "Family-Friendly Accommodation"; ?>">Book Now</a>
               <?php endif; ?>
@@ -91,7 +91,7 @@
               <p>Discover elegance and luxury in our Suite with Private Balcony. This room features a spacious balcony where you can savor your morning coffee while taking in the stunning views of the coastline.</p>
             </div>
             <div class="col-12  col-lg-6 col-xl-4">
-              <a class="btn btn-lg  mx-3 my-2" aria-current="page" href="?rooms">More Details</a>
+              <a class="btn btn-lg  mx-3 my-2 btn-outline-<?= $GLOBALS["darkMode"] ? 'light' : 'dark' ?>" aria-current="page" href="?rooms">More Details</a>
               <?php if ((isset($_SESSION['member_id']) && $_SESSION['is_admin'] == 0) || !isset($_SESSION['member_id'])) : ?>
 
                 <a class="btn btn-lg btn-full my-2" href="?book=<?php echo "Elegant Suite with Private Balcony"; ?>">Book Now</a>
@@ -112,7 +112,7 @@
               <p>Experience classic comfort and timeless elegance in our Classic Room. This well-appointed room offers a cozy retreat with all the essential amenities for a restful stay, providing a touch of traditional charm.</p>
             </div>
             <div class="col-12  col-lg-6 col-xl-4">
-              <a class="btn btn-lg  mx-3 my-2" aria-current="page" href="?rooms">More Details</a>
+              <a class="btn btn-lg  mx-3 my-2 btn-outline-<?= $GLOBALS["darkMode"] ? 'light' : 'dark' ?>" aria-current="page" href="?rooms">More Details</a>
               <?php if ((isset($_SESSION['member_id']) && $_SESSION['is_admin'] == 0) || !isset($_SESSION['member_id'])) : ?>
 
                 <a class="btn btn-lg btn-full my-2" href="?book=<?php echo "Classic Comfort and Timeless Elegance"; ?>">Book Now</a>

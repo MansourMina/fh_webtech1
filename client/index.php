@@ -1,7 +1,7 @@
 <?php
 // Enable when We want to convert images into webp
 
-// include_once 'res/php/convert_to_webp.php';
+// include_once 'src/actions/convert_to_webp.php';
 
 
 ob_start();

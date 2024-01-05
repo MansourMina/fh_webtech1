@@ -56,7 +56,7 @@ foreach ($all_news as $current_news) {
                     </div>
 
                     <div class="col-md-6 mb-4">
-                        <span class="badge  px-2 py-1  mb-3" style="background-color: <?= $GLOBALS["darkMode"] ? 'white' : '#15736b' ?>">News of the day</span>
+                        <span class="badge px-2 py-1 mb-3 bg-success">News of the day</span>
                         <div class="row mb-1">
                             <div class="col-6">
                                 <p class="category"><i class="fa fa-<?= getIcon($news_of_the_day['category']) ?>"></i> <?= $news_of_the_day["category"] ?></p>

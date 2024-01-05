@@ -58,7 +58,7 @@
             object-fit: cover;
         }
 
-        <?php if ($GLOBALS["darkMode"]) : ?>.input-group> .form-control:not([readonly]) {
+        <?php if ($GLOBALS["darkMode"]) : ?>.input-group>.form-control:not([readonly]) {
             background-color: white !important;
             color: black !important;
         }
@@ -83,7 +83,7 @@
                         <div class="card mb-4 border-0">
                             <div class="card-body text-center">
                                 <div class="image-container">
-                                    <img src="<?php echo isset($_SESSION["image"]) ? $_SESSION["image"] : 'res/img/default.png' ?>" alt="Profile Image" class="rounded-circle" id="profile-img">
+                                    <img src="<?php echo isset($_SESSION["image"]) ? $_SESSION["image"] : 'res/img/default.jpg' ?>" alt="Profile Image" class="rounded-circle" id="profile-img">
                                     <label class="overlay">
                                         Change Image
                                         <input type="file" name="picture" accept="image/jpeg,image/png" class="d-none" onchange="loadFile(event)">

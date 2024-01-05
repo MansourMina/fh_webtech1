@@ -39,11 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background-color: #212529 !important;
         }
 
-        .nav-link {
-            color: black;
+        .news-tab {
+            color: <?= $GLOBALS["darkMode"] ? "white" : "black" ?>;
         }
 
-        .nav-link:hover {
+        .news-tab:hover {
             color: <?= $GLOBALS["darkMode"] ? 'white' : '#15736b' ?>;
         }
 
@@ -80,6 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border-color: <?= $GLOBALS["darkMode"] ? 'white' : '#15736b' ?>;
         }
 
+
+
         .dark-overlay {
             position: relative;
         }
@@ -104,6 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     $('#myDataTable_filter input').attr('placeholder', 'Search news');
                     $('#myDataTable_filter input').attr('id', 'searchNews');
+                    $('#myDataTable_info').css('color', '<?= $GLOBALS["darkMode"] ? "white" : "black" ?>');
+                    $('#myDataTable_length').css('color', '<?= $GLOBALS["darkMode"] ? "white" : "black" ?>');
                 }
             });
         });
@@ -115,10 +119,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <ul class="nav nav-tabs" id="myTabs">
             <li class="nav-item tab">
-                <a class="nav-link active" id="list-manager-list" data-bs-toggle="tab" href="#list-manager" role="tab" aria-controls="list-manager">Manager</a>
+                <a class="nav-link active news-tab" id="list-manager-list" data-bs-toggle="tab" href="#list-manager" role="tab" aria-controls="list-manager">Manager</a>
             </li>
             <li class="nav-item tab">
-                <a class="nav-link" id="list-news-list" data-bs-toggle="tab" href="#list-news" role="tab" aria-controls="list-news">Add News</a>
+                <a class="nav-link news-tab" id="list-news-list" data-bs-toggle="tab" href="#list-news" role="tab" aria-controls="list-news">Add News</a>
             </li>
             <!-- <li class="ms-auto ">
                 <a class="nav-link" href="#list-news"><i class="fa fa-download"></i> Download reservations</a>
@@ -146,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php $i = 1;
                         foreach ($news as $current_news) : ?>
 
-                            <tr class="<?= $current_news["status"] == 0 ? 'table-secondary fw-light' : '' ?>">
+                            <tr class="<?= $current_news["status"] == 0 ? 'table-' . ($GLOBALS["darkMode"] ? "active" : "secondary") . ' fw-light' : '' ?>">
                                 <td scope="row">
                                     <div class="d-flex align-items-center <?= $current_news["status"] ? 'fw-bold' : 'fw-light' ?>"><?= $i ?> <i data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="mf-tooltip" data-bs-title="Preview" style="cursor: pointer;" class="fa fa-eye fa-lg ms-5 mt-1" onclick="openModal('newsModal<?= $i ?>')"></i></div>
                                 </td>

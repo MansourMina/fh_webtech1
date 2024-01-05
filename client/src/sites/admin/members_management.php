@@ -42,6 +42,11 @@ if (isset($_GET['members'])) {
         .card {
             min-height: 12vh;
         }
+        #member-img{
+            height: 60px;
+            width: 60px;
+            object-fit: cover;
+        }
     </style>
 </head>
 
@@ -63,7 +68,7 @@ if (isset($_GET['members'])) {
                     <div class="card border-profile my-5" style="border-left: 5px solid <?= $person["is_active"] == 1 ? "#15736b" : "red" ?>; cursor: pointer;">
                         <div class="card-body p-4">
                             <div class="d-flex align-items-center">
-                                <div class="me-5"><img src="<?php echo $person["image"] ? $person["image"] : 'res/img/default.png' ?>" alt="Profile Image" class="rounded-circle img-circle" width="50" height="50" id="profile"></div>
+                                <div class="me-5"><img src="<?php echo $person["image"] ? $person["image"] : 'res/img/default.jpg' ?>" alt="Profile Image" class="rounded-circle img-circle" id="member-img"></div>
                                 <div>
                                     <p class="mb-0 h5 fw-bold"><?= $person["firstname"] . " " . $person["lastname"] ?></p>
                                     <p class="mb-0"><?= $person["is_admin"] == 1 ? "Admin" : "User" ?>
