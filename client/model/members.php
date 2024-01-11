@@ -83,3 +83,19 @@ function changeMemberLogin($member_id, $status)
     $stmt->execute();
     return $stmt;
 }
+
+function deleteAccount($member_id)
+{
+    $member = getMemberByAttribute('member_id', $member_id, 'i');
+    $imgPath =  $member["image"];
+    if (file_exists($imgPath)) {
+        unlink($imgPath);
+    }
+
+    $sql = "Delete from members where member_id = ? ";
+    $stmt = db->prepare($sql);
+    $stmt->bind_param("i", $member_id);
+    $stmt->execute();
+
+    return $stmt;
+}

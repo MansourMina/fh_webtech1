@@ -75,9 +75,9 @@ if (isset($_GET['members'])) {
                                         <span class="fw-bold"><?= $person["member_id"] == $_SESSION["member_id"] ? "(You)" : '' ?></span>
                                     </p>
                                 </div>
-                                <div class="ms-auto">
-                                    <i class="fa fa-circle fa-lg <?= $person["is_active"] == 0 ? "text-danger" : "" ?>"></i>
-                                    <span><?= $person["is_active"] == 1 ? "Active" : "Deactivated" ?> </span>
+                                <div class="ms-auto d-flex align-items-center">
+                                    <i class="me-2 fa fa-circle fa-lg <?= $person["is_active"] == 0 ? "text-danger" : "text-success" ?>"></i>
+                                    <span class="d-sm-block d-none"><?= $person["is_active"] == 1 ? "Active" : "Deactivated" ?> </span>
                                 </div>
 
                             </div>

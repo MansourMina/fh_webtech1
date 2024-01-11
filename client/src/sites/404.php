@@ -26,7 +26,7 @@
 <body>
     <div class="container notFound ">
         <div class="row no-gutters shadow-box " style="min-height: 85vh;">
-            <div class="col-lg-6 bg-white p-5 align-self-center">
+            <div class="col-lg-6  p-5 align-self-center">
                 <div>
                     <h1 class="title">404</h1>
                     <h2 class="card-subtitle mb-2 fw-bold">This is not the page you are looking for!</h2>
@@ -37,7 +37,7 @@
 
             </div>
             <div class="col-lg-6  p-0 " style="align-self: center;">
-                <img src="res/img/404.jpg" class="img-fluid img" alt=" MF Palmside Resort">
+                <img src="res/img/<?= $not_found_img ?>" class="img-fluid img" alt=" MF Palmside Resort">
             </div>
 
         </div>

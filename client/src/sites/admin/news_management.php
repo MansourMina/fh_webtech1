@@ -3,7 +3,55 @@ include_once 'model/news.php';
 $publishStatus = null;
 $news_id = null;
 $news = getNews();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+$news_title = "";
+$news_content = "";
+$news_image = "";
+$news_category = "";
+$errors = [];
+if (isset($_POST['add_news'])) {
+    $fields = [
+        'news_title' => 'Title',
+        'news_content' => 'News content',
+        'news_image' => 'Image',
+        'news_category' => 'Category',
+    ];
+    foreach ($fields as $field => $error) {
+        if ($field == 'news_image') {
+            $contentType = mime_content_type($_FILES["news_image"]["tmp_name"]);
+            if (!($contentType === "image/jpeg" || $contentType === "image/png" || $contentType === "image/webp")) {
+                $errors[$field] = "$error has an invalid file type!";
+            }
+        } else {
+            $$field = isset($_POST[$field]) ? $_POST[$field] : "";
+            if (empty($$field)) {
+                $errors[$field] = "$error is required";
+            }
+        }
+    }
+    if (empty($errors)) {
+        // Get image infos of the image the member wants to upload
+        $info = pathinfo($_FILES["news_image"]["name"]);
+        $news_image = "src/upload/news/" . uniqid() . "_img." . $info["extension"];
+        // Resize the image by half
+        $percent = 0.5;
+        list($width, $height) = getimagesize($_FILES['news_image']['tmp_name']);
+        $new_width = $width * $percent;
+        $new_height = $height * $percent;
+        $image_p = imagecreatetruecolor($new_width, $new_height);
+        $contentType = mime_content_type($_FILES["news_image"]["tmp_name"]);
+        if ($contentType === "image/jpeg") {
+            $image = imagecreatefromjpeg($_FILES['news_image']['tmp_name']);
+            imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+        }
+        imagejpeg($image_p, $news_image, 100);
+
+        // Upload the wanted image
+        move_uploaded_file($_FILES['news_image']['tmp_name'], $news_image);
+        $stmt = addNews($news_title, $news_content, $news_image, $news_category);
+        header("Location: ?news-management");
+        exit;
+    }
+} else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $news_id = isset($_POST['news_id']) ? $_POST['news_id'] : null;
     if (isset($_POST['publishStatus'])) {
         $publishStatus = $_POST['publishStatus'] == 1 ? 0 : 1;
@@ -16,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Admin News Management - Effectively manage the news of the hotel">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <style>
         .tab-content>div {
             display: none;
@@ -34,10 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: block;
         }
 
-        .tab .active {
-            color: white !important;
-            background-color: #212529 !important;
-        }
 
         .news-tab {
             color: <?= $GLOBALS["darkMode"] ? "white" : "black" ?>;
@@ -76,11 +122,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .form-switch .form-check-input:checked {
-            background-color: <?= $GLOBALS["darkMode"] ? 'white' : '#15736b' ?>;
-            border-color: <?= $GLOBALS["darkMode"] ? 'white' : '#15736b' ?>;
+            background-color: <?= $GLOBALS["darkMode"] ? 'green' : '#15736b' ?>;
+            border-color: <?= $GLOBALS["darkMode"] ? 'green' : '#15736b' ?>;
         }
 
 
+        .paginate_button .current {
+            color: red;
+        }
 
         .dark-overlay {
             position: relative;
@@ -88,6 +137,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         table tbody td {
             vertical-align: middle;
+        }
+
+        .editor-toolbar a {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+
+        .CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
+            background-color: transparent;
+        }
+
+        <?php if ($GLOBALS["darkMode"]) : ?>.cm-spell-error,
+
+        .editor-toolbar a:before,
+        .cm-formatting {
+            color: white;
+        }
+
+        .editor-toolbar a.active {
+            color: black;
+            background-color: gray;
+        }
+
+        .CodeMirror {
+            background-color: #212529;
+        }
+
+
+        <?php endif; ?>.editor-toolbar a.fa-bold,
+        a.fa-italic,
+        a.fa-list-ol {
+            pointer-events: auto;
+            opacity: 1;
+            font-weight: bold;
         }
     </style>
 
@@ -103,7 +187,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     "search": ""
                 },
                 "initComplete": function() {
-
                     $('#myDataTable_filter input').attr('placeholder', 'Search news');
                     $('#myDataTable_filter input').attr('id', 'searchNews');
                     $('#myDataTable_info').css('color', '<?= $GLOBALS["darkMode"] ? "white" : "black" ?>');
@@ -114,15 +197,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </script>
 </head>
 
-<body>
+<body onload="generateTitle()">
     <div class="container-fluid p-5 ">
 
         <ul class="nav nav-tabs" id="myTabs">
             <li class="nav-item tab">
-                <a class="nav-link active news-tab" id="list-manager-list" data-bs-toggle="tab" href="#list-manager" role="tab" aria-controls="list-manager">Manager</a>
+                <a class="nav-link <?= count($errors) > 0 ? '' : 'active' ?>  news-tab" id="list-manager-list" data-bs-toggle="tab" href="#list-manager" role="tab" aria-controls="list-manager"><i class="fa fa-list me-2"></i>Manager</a>
             </li>
-            <li class="nav-item tab">
-                <a class="nav-link news-tab" id="list-news-list" data-bs-toggle="tab" href="#list-news" role="tab" aria-controls="list-news">Add News</a>
+            <li class="nav-item tab <?= count($errors) > 0 ? '' : 'active' ?>">
+                <a class="nav-link news-tab" id="list-news-list" data-bs-toggle="tab" href="#list-news" role="tab" aria-controls="list-news"><i class="fa fa-plus me-2"></i>Add News</a>
             </li>
             <!-- <li class="ms-auto ">
                 <a class="nav-link" href="#list-news"><i class="fa fa-download"></i> Download reservations</a>
@@ -131,9 +214,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         </ul>
 
-        <div class="tab-content my-4">
-            <div class="tab-pane fade show active " id="list-manager" role="tabpanel" aria-labelledby="list-manager-list">
-                <table class="table " id="myDataTable">
+        <div class="tab-content my-5">
+            <div class="tab-pane fade <?= count($errors) > 0 ? '' : 'show active' ?> " id="list-manager" role="tabpanel" aria-labelledby="list-manager-list">
+                <table class="table pt-4" id="myDataTable">
                     <thead>
                         <tr>
                             <th class="col-1 ">#</th>
@@ -141,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <th class="col-1">Category</th>
                             <th class="col-2">Title</th>
                             <th class="col-1">Date</th>
-                            <th class="col-5">Content</th>
+                            <th class="col-5 d-none d-lg-table-cell">Content</th>
                             <th class="col-1 text-center">Status</th>
                         </tr>
                     </thead>
@@ -150,9 +233,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php $i = 1;
                         foreach ($news as $current_news) : ?>
 
-                            <tr class="<?= $current_news["status"] == 0 ? 'table-' . ($GLOBALS["darkMode"] ? "active" : "secondary") . ' fw-light' : '' ?>">
+                            <tr class="<?= $current_news["status"] == 0 ? "fw-light" . " " . ($GLOBALS["darkMode"] ? "table-active" : "table-secondary") : '' ?>">
                                 <td scope="row">
-                                    <div class="d-flex align-items-center <?= $current_news["status"] ? 'fw-bold' : 'fw-light' ?>"><?= $i ?> <i data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="mf-tooltip" data-bs-title="Preview" style="cursor: pointer;" class="fa fa-eye fa-lg ms-5 mt-1" onclick="openModal('newsModal<?= $i ?>')"></i></div>
+                                    <div class="d-flex align-items-center <?= $current_news["status"] ? 'fw-bold' : 'fw-light' ?>"><?= $i ?> <i data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="mf-tooltip" data-bs-title="Preview" style="cursor: pointer;" class="fa fa-eye fa-lg ms-5 mt-1" onclick="openNewsModal('newsModal<?= $i ?>')"></i></div>
                                 </td>
                                 <th>
                                     <div class="<?= $current_news["status"] == 0 ? 'dark-overlay drk' : '' ?>"><img src="<?= $current_news["image"] ?>" class="datatable-image "></div>
@@ -161,12 +244,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <td>
                                     <?= $current_news["title"] ?>
                                     <?php if ($current_news["news_of_the_day"]) : ?>
-                                        <span class="badge text-bg-<?= $current_news["status"] == 0 ? 'secondary' : 'success' ?>">News of the day</span>
+                                        <span class="badge ms-1 text-bg-<?= $current_news["status"] == 0 ? 'secondary' : 'success' ?>">News of the day</span>
                                     <?php endif; ?>
                                 </td>
                                 <td><?= $current_news["date"] ?></td>
-                                <td class="overflow-hidden " style="white-space: nowrap; text-overflow: ellipsis; max-width: 300px;">
-                                    <?= $current_news["content"] ?>
+                                <td class="overflow-hidden d-none d-lg-table-cell" style="white-space: nowrap; text-overflow: ellipsis; max-width: 300px;">
+                                    <span class="news_content"><?= $current_news["content"] ?></span>
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
@@ -185,7 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="modal-dialog modal-lg modal-dialog-scrollable">
                                     <div class="modal-content">
                                         <div class="modal-header ">
-                                            <i data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="mf-tooltip" data-bs-title="Published by <?= $current_news["firstname"] . " " . $current_news["lastname"] ?>" class="<?= $current_news["status"] ? 'text-success' : 'text-danger' ?> fa fa-globe fa-lg me-5"></i>
+                                            <i data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="mf-tooltip" data-bs-title="Published: <?= $current_news["member_id"] ? ($current_news["firstname"] . " " . $current_news["lastname"]) : "N/A" ?>" class="<?= $current_news["status"] ? 'text-success' : 'text-danger' ?> fa fa-globe fa-lg me-5"></i>
 
                                             <?php if ($current_news["news_of_the_day"]) : ?>
                                                 <span class="badge text-bg-<?= $current_news["status"] == 0 ? 'secondary' : 'success' ?>">News of the day</span>
@@ -213,7 +296,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                                                     <div>
                                                         <h5 class="mb-4 fw-bold"> <?= $current_news["title"] ?></h5>
-                                                        <p>
+                                                        <p class="news_content" id="content_newsModal<?= $i ?>">
                                                             <!-- nl2br übernimmt die newLines von den Daten der Datenbank -->
                                                             <?= nl2br($current_news["content"]) ?>
                                                         </p>
@@ -235,25 +318,129 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 </table>
             </div>
+            <div class="tab-pane fade <?= count($errors) > 0 ? 'show active' : '' ?>" id="list-news" role="tabpanel" aria-labelledby="list-news-list">
+                <form enctype="multipart/form-data" action="" method="post" id="newsForm">
+                    <div class="mb-4">
+                        <label for="news_title" class="form-label"><i class="fa fa-paragraph me-3"></i>Title</label>
+                        <input type="text" class="form-control" id="news_title" name="news_title" value="<?= $news_title ?>">
+                        <?php if (isset($errors["news_title"])) {
+                            echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["news_title"] . "</span>";
+                        } ?>
+                    </div>
+                    <div class="mb-4">
+                        <label for="news_content" class="form-label"><i class="fa fa-comments me-3"></i>Content</label>
+                        <textarea id="news_content" row="5" name="news_content" value="<?= $news_content ?>"></textarea>
+                        <?php if (isset($errors["news_content"])) {
+                            echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["news_content"] . "</span>";
+                        } ?>
+
+                    </div>
+                    <div class="mb-4">
+                        <label for="news_image" class="form-label"><i class="fa fa-image me-3"></i>Image</label>
+                        <input class="form-control" type="file" id="news_image" name="news_image">
+                        <?php if (isset($errors["news_image"])) {
+                            echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["news_image"] . "</span>";
+                        } ?>
+                    </div>
+                    <div class="mb-4">
+
+                        <label for="news_category" class="form-label"><i class="fa fa-table me-3"></i>Category</label>
+                        <input class="form-control" list="exampleDataList" id="news_category" placeholder="Type to search for a category" name="news_category" value="<?= $news_category ?>">
+                        <datalist id="exampleDataList">
+                            <option value="Hotel">
+                            <option value="Country">
+                            <option value="Business">
+                            <option value="Renovation">
+                        </datalist>
+                        <?php if (isset($errors["news_category"])) {
+                            echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["news_category"] . "</span>";
+                        } ?>
+                    </div>
+                    <div class="text-center"><button class="btn btn-full mb-3 mt-3" name="add_news" type="submit" disabled id="add_news_button">Add news</button></div>
+                </form>
+            </div>
         </div>
-        <div class="tab-pane fade" id="list-news" role="tabpanel" aria-labelledby="list-news-list">...</div>
-
     </div>
 
-
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <script>
-        function openModal(id) {
+        function openNewsModal(id) {
             var modal = new bootstrap.Modal(document.getElementById(id));
             modal.show();
+            var textContainer = document.getElementById(`content_${id}`);
+            var textContent = textContainer.innerHTML;
+
+            var transformedTextBold = textContent.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            var transformedTextItalic = transformedTextBold.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+            textContainer.innerHTML = transformedTextItalic;
         }
 
         function submitForm(formId) {
             document.getElementById(formId).submit();
         }
+
+        // Generiert einen Random News title in den placeholder rein
+        function generateTitle() {
+            const prefixes = ["Discover", "Exploring", "The Hidden", "Unveiling", "Inside", "Journey through", "Captivating", "Enchanting", "Secrets of", "Embark on", "A Glimpse into"];
+            const keywords = ["Luxurious", "Tranquil", "Exquisite", "Serenity", "Majestic", "Breathtaking", "Elegant", "Picturesque", "Opulent", "Harmonious", "Radiant", "Graceful"];
+            const suffixes = ["Retreat", "Paradise", "Getaway", "Haven", "Oasis", "Escape", "Sanctuary", "Wonderland", "Utopia", "Dreamland", "Heavenly", "Eden"];
+
+            const randomPrefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+            const randomKeyword = keywords[Math.floor(Math.random() * keywords.length)];
+            const randomSuffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+
+            const generatedTitle = `${randomPrefix} the ${randomKeyword} ${randomSuffix}`;
+            document.getElementById('news_title').placeholder = generatedTitle;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const addButton = document.getElementById('add_news_button');
+
+            function checkValidityAndEnableButton() {
+                const title = document.getElementById('news_title');
+                const content = document.getElementById('news_content');
+                const image = document.getElementById('news_image');
+                const category = document.getElementById('news_category');
+
+                if (title && content && image && category) {
+                    const titleValue = title.value.trim();
+                    const imageValue = image.files.length;
+                    const categoryValue = category.value.trim();
+                    const contentValue = isEditorEmpty().trim();
+
+                    addButton.disabled = !(titleValue !== '' && contentValue !== '' && categoryValue !== '' && imageValue !== 0);
+                }
+            }
+
+            // Füge die Überprüfungsfunktion an das input-Ereignis jedes Elements an
+            const formElements = document.querySelectorAll('#newsForm input, #newsForm textarea');
+            formElements.forEach(function(element) {
+                element.addEventListener('input', checkValidityAndEnableButton);
+            });
+
+            // Initialisierung beim Laden der Seite
+            checkValidityAndEnableButton();
+        });
+
+        const simplemde = new SimpleMDE({
+            element: document.getElementById('news_content')
+        });
+
+        function isEditorEmpty() {
+            const editorContent = simplemde.value();
+            return editorContent;
+        }
+
+        function toggleBold() {
+            simplemde.toggleBold();
+        }
+
+        function toggleItalic() {
+            simplemde.toggleItalic();
+        }
     </script>
-    </script>
+
 </body>
 
 </html>

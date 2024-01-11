@@ -46,7 +46,7 @@
 
                         </button>
 
-                        <button class="nav-link  settings-tab" id="v-pills-general-tab" data-bs-toggle="pill" data-bs-target="#v-pills-general" type="button" role="tab" aria-controls="v-pills-general" aria-selected="false">
+                        <button class="nav-link  settings-tab" id="v-pills-theme-tab" data-bs-toggle="pill" data-bs-target="#v-pills-theme" type="button" role="tab" aria-controls="v-pills-theme" aria-selected="false">
                             <div class="d-flex align-items-center justify-content-start">
                                 <i class="fa fa-gears me-4 settings-icon"></i>
                                 Theme
@@ -57,6 +57,7 @@
 
                     </div>
                     <div class="tab-content w-75" id="v-pills-tabContent">
+
                         <div class="tab-pane fade show active" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab" tabindex="0">
                             <div class="d-flex justify-content-between">
                                 <span class="col-form-label">Profile</span>
@@ -74,16 +75,16 @@
                             <hr>
                             <div class="d-flex justify-content-between">
                                 <label for="deleteAccount" class="col-form-label">Delete Account</label>
-                                <button id="deleteAccount" class="btn btn-danger" type="button">
+                                <button id="deleteAccount" class="btn btn-danger" type="button" onclick="openModal('deleteAccountModal')">
                                     Delete</button>
                             </div>
 
                         </div>
-                        <div class="tab-pane fade " id="v-pills-general" role="tabpanel" aria-labelledby="v-pills-general-tab" tabindex="0">
+                        <div class="tab-pane fade " id="v-pills-theme" role="tabpanel" aria-labelledby="v-pills-theme-tab" tabindex="0">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="col-form-label">Theme</span>
+                                <form action="" method="post">
 
-                                <form action="" method="post" id="selectTheme">
                                     <a class="nav-link dropdown-toggle nav_title btn fw-normal fs-6 mb-0" data-bs-toggle='dropdown' href="#">
                                         <?= $GLOBALS["darkMode"] ? "Dark" : "Light" ?>
                                     </a>
@@ -92,6 +93,7 @@
                                         <button type="submit" name="theme_color" value="dark" class='dropdown-item nav_title fw-normal btn'>Dark</button>
                                     </ul>
                                 </form>
+
                             </div>
 
                         </div>
@@ -108,3 +110,4 @@
         </div>
     </div>
 </div>
+<?php include_once 'deleteAccount.php' ?>

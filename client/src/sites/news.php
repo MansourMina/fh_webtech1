@@ -67,8 +67,8 @@ foreach ($all_news as $current_news) {
                             </div>
                         </div>
                         <h4 class="fw-bold"><?= $news_of_the_day["title"] ?></h4>
-                        <p class="text-muted">
-                            <?= $news_of_the_day["content"] ?>
+                        <p class="text-muted news_content">
+                            <?= nl2br($news_of_the_day["content"]) ?>
                         </p>
                     </div>
                 </div>
@@ -76,9 +76,9 @@ foreach ($all_news as $current_news) {
         <?php endif; ?>
 
         <section>
-            <div class="row gx-lg-5 justify-content-center mx-0">
+            <div class="row gx-lg-5 mx-0">
                 <?php foreach ($news as $current_news) : ?>
-                    <div class="col-lg-<?= count($news) < 3 ? 6 : 4 ?> col-md-12 mb-5 mt-4 mb-lg-0 mt-lg-0">
+                    <div class="col-lg-<?= count($news) < 3 ? 6 : 4 ?> col-md-12 mb-<?= count($news) < 3 ? 0 : 5 ?>">
                         <div class=" mb-4 text-center image-container ">
                             <img src="<?= $current_news['image'] ?>" class="img-fluid " />
                         </div>
@@ -98,7 +98,7 @@ foreach ($all_news as $current_news) {
 
                             <div>
                                 <h5 class="mb-4 fw-bold"> <?= $current_news["title"] ?></h5>
-                                <p>
+                                <p class="text-muted news_content">
                                     <!-- nl2br übernimmt die newLines von den Daten der Datenbank -->
                                     <?= nl2br($current_news["content"]) ?>
                                 </p>
@@ -114,6 +114,9 @@ foreach ($all_news as $current_news) {
 
 
     </div>
+    <script>
+
+    </script>
 </body>
 
 </html>

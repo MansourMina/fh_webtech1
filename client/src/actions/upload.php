@@ -2,37 +2,40 @@
 
 $toUpdate = array();
 if ((!empty($_FILES['picture']['name']))) {
-    // Delete the member's existing image before uploading a new one
-    if ($_SESSION["image"] != NULL) {
-        $files = glob($_SESSION["image"] . "*");
-        foreach ($files as $file) {
-            if (file_exists($file)) {
-                unlink($file);
+    $contentType = mime_content_type($_FILES["picture"]["tmp_name"]);
+
+    if ($contentType === "image/jpeg" || $contentType === "image/png" || $contentType === "image/webp") {
+        // Delete the member's existing image before uploading a new one
+        if ($_SESSION["image"] != NULL) {
+            $files = glob($_SESSION["image"] . "*");
+            foreach ($files as $file) {
+                if (file_exists($file)) {
+                    unlink($file);
+                }
             }
         }
+
+        // Get image infos of the image the member wants to upload
+        $info = pathinfo($_FILES["picture"]["name"]);
+        $filename = "src/upload/user/" . uniqid() . "_img." . $info["extension"];
+
+
+        // Resize the image by half
+        $percent = 0.5;
+        list($width, $height) = getimagesize($_FILES['picture']['tmp_name']);
+        $new_width = $width * $percent;
+        $new_height = $height * $percent;
+        $image_p = imagecreatetruecolor($new_width, $new_height);
+        if ($contentType === "image/jpeg") {
+            $image = imagecreatefromjpeg($_FILES['picture']['tmp_name']);
+            imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+        }
+        imagejpeg($image_p, $filename, 100);
+
+        // Upload the wanted image
+        move_uploaded_file($_FILES['picture']['tmp_name'], $filename);
+        $toUpdate["image"] = $filename;
     }
-
-    // Get image infos of the image the member wants to upload
-    $info = pathinfo($_FILES["picture"]["name"]);
-    $filename = "src/upload/" . uniqid() . "_img." . $info["extension"];
-
-
-    // Resize the image by half
-    $percent = 0.5;
-    list($width, $height) = getimagesize($_FILES['picture']['tmp_name']);
-    $new_width = $width * $percent;
-    $new_height = $height * $percent;
-    $image_p = imagecreatetruecolor($new_width, $new_height);
-    $contentType = mime_content_type($_FILES["picture"]["tmp_name"]);
-    if ($contentType === "image/jpeg") {
-        $image = imagecreatefromjpeg($_FILES['picture']['tmp_name']);
-        imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-    }
-    imagejpeg($image_p, $filename, 100);
-
-    // Upload the wanted image
-    move_uploaded_file($_FILES['picture']['tmp_name'], $filename);
-    $toUpdate["image"] = $filename;
 }
 
 $fields = [

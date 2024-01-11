@@ -3,6 +3,9 @@
 
 // include_once 'src/actions/convert_to_webp.php';
 
+include_once 'src/actions/resizeImage.php';
+
+
 
 ob_start();
 session_start();

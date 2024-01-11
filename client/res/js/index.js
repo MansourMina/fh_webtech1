@@ -4,7 +4,6 @@ const tooltipTriggerList = document.querySelectorAll(
 const tooltipList = [...tooltipTriggerList].map(
   (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl),
 );
-
 function openModal(id) {
   let myModal = new bootstrap.Modal(document.getElementById(id));
   myModal.show();
@@ -37,7 +36,7 @@ function toggleReadOnly(buttonName, inputName, value) {
         let save = document.getElementById('saveButton');
         save.removeAttribute('disabled');
       } else {
-        var saveMemberEmail = document.getElementById('saveMemberEmail');
+        let saveMemberEmail = document.getElementById('saveMemberEmail');
         saveMemberEmail.style.display = 'block';
       }
     }
@@ -51,3 +50,24 @@ function closePassword() {
   oldPasswordField.value = '';
   newPasswordField.value = '';
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  let textContainers = document.querySelectorAll('.news_content');
+
+  textContainers.forEach(function (textContainer) {
+    let textContent = textContainer.innerHTML;
+
+    // Suche nach ** und ersetze durch HTML-Tags für Fettschrift
+    let transformedTextBold = textContent.replace(
+      /\*\*(.*?)\*\*/g,
+      '<strong>$1</strong>',
+    );
+
+    // Suche nach * und ersetze durch HTML-Tags für Kursivschrift
+    let transformedTextItalic = transformedTextBold.replace(
+      /\*(.*?)\*/g,
+      '<em>$1</em>',
+    );
+    textContainer.innerHTML = transformedTextItalic;
+  });
+});

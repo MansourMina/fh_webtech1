@@ -40,8 +40,8 @@
 
 <hr class="mt-3  mx-auto" style="width: 60vw; padding: 1px" />
 
-<div class=" text-center mt-5 ">
-  <h1 class="mb-4">Accomodation</h1>
+<div class=" text-center my-5 ">
+  <h1 class="mb-5">Accomodation</h1>
   <div id="carouselExample" class="carousel slide">
 
     <div class="carousel-inner ">
@@ -137,7 +137,7 @@
 </div>
 <hr class="mt-3  mx-auto" style="width: 60vw; padding: 1px" />
 <div class=" text-center mt-5 ">
-  <h1 class="mb-4">Services</h1>
+  <h1 class="mb-5">Services</h1>
   <?php include_once "src/util/services.php" ?>
 </div>
 

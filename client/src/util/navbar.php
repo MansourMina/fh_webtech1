@@ -6,9 +6,7 @@
         color: grey;
     }
 
-    #sidebar-profile {
-        height: 100px;
-        width: 100px;
+    .sidebar-profile {
         object-fit: cover;
     }
 
@@ -45,8 +43,9 @@
 
             <li class="nav-item <?php echo isset($_SESSION['member_id']) ? 'dropdown' : '' ?> mx-3 pt-1">
                 <?php if (isset($_SESSION['member_id'])) : ?>
-                    <a class="nav-link dropdown-toggle nav_title " style="cursor:pointer" data-bs-toggle='dropdown' href="#">
-                        <span style='color:<?= $GLOBALS["darkMode"] ? 'white' : '#15736b' ?>; max-width: 200px; vertical-align: middle;' class='d-inline-block text-truncate '> <?= $_SESSION['firstname'] . " " . $_SESSION['lastname'] ?></span>
+
+                    <a class="nav-link dropdown-toggle nav_title " style="cursor:pointer; " data-bs-toggle='dropdown' href="#">
+                        <span class="fw-bolder d-inline-block text-truncate " style=' max-width: 200px; vertical-align: middle; margin-top: -2px;'> <?= $_SESSION['firstname'] . " " . $_SESSION['lastname'] ?></span>
                     </a>
                     <ul class='dropdown-menu dropdown-menu-dark'>
                         <a class='dropdown-item nav_title fw-normal' href='?profile'>Profile</a>
@@ -96,7 +95,8 @@
         </div>
         <div class="d-flex row align-items-center text-center mt-2">
             <div>
-                <img src="<?php echo $_SESSION["image"] ? $_SESSION["image"] : 'res/img/default.jpg' ?>" alt="Profile Image" class="rounded-circle" id="sidebar-profile">
+
+                <img style="height: 100px; width: 100px;" src="<?php echo file_exists($_SESSION["image"]) ? $_SESSION["image"] : 'res/img/default.jpg' ?>" alt="Profile Image" class="rounded-circle sidebar-profile">
 
 
             </div>
@@ -139,4 +139,5 @@
         </div>
     </div>
 </div>
+
 <!-- <script src="res/js/index.js"> </script> -->
