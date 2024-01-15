@@ -367,12 +367,19 @@ if (isset($_POST['add_news'])) {
         function openNewsModal(id) {
             var modal = new bootstrap.Modal(document.getElementById(id));
             modal.show();
+
+            textContainer.innerHTML = transformedTextItalic;
             var textContainer = document.getElementById(`content_${id}`);
-            var textContent = textContainer.innerHTML;
-
-            var transformedTextBold = textContent.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            var transformedTextItalic = transformedTextBold.replace(/\*(.*?)\*/g, '<em>$1</em>');
-
+            // Search for ** and replace HTML-Tag for bold
+            let transformedTextBold = textContent.replace(
+                /\*\*(.*?)\*\*/g,
+                '<strong>$1</strong>',
+            );
+            // Search for * and replace HTML-Tag for italic
+            let transformedTextItalic = transformedTextBold.replace(
+                /\*(.*?)\*/g,
+                '<em>$1</em>',
+            );
             textContainer.innerHTML = transformedTextItalic;
         }
 
@@ -380,7 +387,7 @@ if (isset($_POST['add_news'])) {
             document.getElementById(formId).submit();
         }
 
-        // Generiert einen Random News title in den placeholder rein
+        // Generate a random news title and insert it into the placeholder
         function generateTitle() {
             const prefixes = ["Discover", "Exploring", "The Hidden", "Unveiling", "Inside", "Journey through", "Captivating", "Enchanting", "Secrets of", "Embark on", "A Glimpse into"];
             const keywords = ["Luxurious", "Tranquil", "Exquisite", "Serenity", "Majestic", "Breathtaking", "Elegant", "Picturesque", "Opulent", "Harmonious", "Radiant", "Graceful"];
@@ -398,35 +405,41 @@ if (isset($_POST['add_news'])) {
             const addButton = document.getElementById('add_news_button');
 
             function checkValidityAndEnableButton() {
+                // Get attributes for check
                 const title = document.getElementById('news_title');
                 const content = document.getElementById('news_content');
                 const image = document.getElementById('news_image');
                 const category = document.getElementById('news_category');
 
+                // Check if existing
                 if (title && content && image && category) {
                     const titleValue = title.value.trim();
                     const imageValue = image.files.length;
                     const categoryValue = category.value.trim();
                     const contentValue = isEditorEmpty().trim();
 
+                    // Toggle disabling paramter based on validaton
                     addButton.disabled = !(titleValue !== '' && contentValue !== '' && categoryValue !== '' && imageValue !== 0);
                 }
             }
 
-            // Füge die Überprüfungsfunktion an das input-Ereignis jedes Elements an
+            // Attach the validation function to the input event of each element
             const formElements = document.querySelectorAll('#newsForm input, #newsForm textarea');
             formElements.forEach(function(element) {
                 element.addEventListener('input', checkValidityAndEnableButton);
             });
 
-            // Initialisierung beim Laden der Seite
+
+            // Initialization when the page is loaded
             checkValidityAndEnableButton();
         });
 
+        // Create a text formatting editor for the text area
         const simplemde = new SimpleMDE({
             element: document.getElementById('news_content')
         });
 
+        // Check if textarea is empty
         function isEditorEmpty() {
             const editorContent = simplemde.value();
             return editorContent;

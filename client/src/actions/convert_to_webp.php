@@ -4,26 +4,27 @@ $gewuenschteOrdner = [
 ];
 
 foreach ($gewuenschteOrdner as $gewuenschterOrdner) {
-    // Pfade zu allen PNG- und JPG-Bildern im aktuellen Ordner
+// Paths to all PNG and JPG images in the current directory
     $bilder = glob($gewuenschterOrdner . '*.{jpg,jpeg,png}', GLOB_BRACE);
 
-    // Durchlaufe alle gefundenen Bilder im aktuellen Ordner
+    // Iterate through all found images in the current directory
     foreach ($bilder as $ursprungsDatei) {
-        // Konstruieren Sie den Zielnamen für die WebP-Datei
+        // Construct the target name for the WebP file
         $zielDatei = pathinfo($ursprungsDatei, PATHINFO_DIRNAME) . '/' . pathinfo($ursprungsDatei, PATHINFO_FILENAME) . '.webp';
 
-        // Überprüfen Sie, ob bereits eine WebP-Version existiert
+        // Check if a WebP version already exists
         if (!file_exists($zielDatei)) {
-            // Lade das Bild in den Arbeitsspeicher
+            
+            // Load the image into memory
             $bild = imagecreatefromstring(file_get_contents($ursprungsDatei));
 
-            // Speichere das Bild im WebP-Format
+            // Save the image in WebP format
             imagewebp($bild, $zielDatei, 80); // Die Zahl 80 repräsentiert die Qualität (0-100)
 
-            // Gib den Arbeitsspeicher frei
+            // Free up the memory
             imagedestroy($bild);
 
-            // Lösche die ursprüngliche Datei
+            // Delete the original file
             unlink($ursprungsDatei);
         }
     }

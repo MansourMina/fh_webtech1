@@ -84,6 +84,7 @@ function changeMemberLogin($member_id, $status)
     return $stmt;
 }
 
+// Function to delete the account of a specific member
 function deleteAccount($member_id)
 {
     $member = getMemberByAttribute('member_id', $member_id, 'i');
@@ -99,3 +100,4 @@ function deleteAccount($member_id)
 
     return $stmt;
 }
+

@@ -1,10 +1,13 @@
 <?php
 $member = NULL;
 $toUpdate = array();
+$errors = array();
 
+// Get Member information about the selected user
 if (isset($_GET['members-profile'])) {
     $member = getMemberByAttribute("member_id", $_GET['members-profile'], "i");
 }
+// Deactive or Activate the current User
 if (isset($_POST['changeLoginStatus'])) {
     $status = $member["is_active"] ? 0 : 1;
     $stmt = changeMemberLogin($member["member_id"], $status);
@@ -15,20 +18,62 @@ if (isset($_POST['changeLoginStatus'])) {
 }
 
 
-//TODO: Check if email already existing
+
 if (isset($_POST["changeMemberEmail"])) {
     $member_email = isset($_POST['member_email']) ? $_POST['member_email'] : "";
-    if (!empty($member_email)) {
-        $toUpdate["email"] = $member_email;
+
+    // Check if email already existing
+    $user_members_cred = getMembersCred();
+    if (empty($member_password)) {
+        $errors["member_email"] = "Email is required";
     }
-    if (count($toUpdate) > 0) {
-        $stmt = updateProfile($toUpdate, $member["member_id"]);
-        if ($stmt) {
-            $updatedUser = getMemberByAttribute("member_id", $member["member_id"], "i");
+    foreach ($user_members_cred as $user) {
+        if ($member_email == $user['email']) {
+            $errors["member_email"] = "Email already existing";
+            break;
         }
     }
-    header("Location: ?members-profile=" . $member['member_id']);
-    exit();
+
+
+    // Change member email if there is no error
+    if (empty($errors)) {
+        if (!empty($member_email)) {
+            $toUpdate["email"] = $member_email;
+        }
+
+        if (count($toUpdate) > 0) {
+            $stmt = updateProfile($toUpdate, $member["member_id"]);
+            if ($stmt) {
+                $updatedUser = getMemberByAttribute("member_id", $member["member_id"], "i");
+            }
+        }
+        header("Location: ?members-profile=" . $member['member_id']);
+        $toUpdate = [];
+        exit();
+    }
+}
+if (isset($_POST["changeMemberPassword"])) {
+    $member_password = isset($_POST['member_password']) ? $_POST['member_password'] : "";
+
+    // Change member password
+    if (empty($member_password)) {
+        $errors["member_password"] = "Password is required";
+    }
+    if (empty($errors)) {
+
+        if (!empty($member_password)) {
+            $toUpdate["password"] = password_hash($member_password, PASSWORD_DEFAULT);;
+        }
+
+        if (count($toUpdate) > 0) {
+            $stmt = updateProfile($toUpdate, $member["member_id"]);
+            if ($stmt) {
+                $updatedUser = getMemberByAttribute("member_id", $member["member_id"], "i");
+            }
+        }
+        header("Location: ?members-profile=" . $member['member_id']);
+        exit();
+    }
 }
 ?>
 
@@ -175,17 +220,16 @@ if (isset($_POST["changeMemberEmail"])) {
 
                                                         <input class="form-control my-2 text-secondary " type="email" value="<?php echo $member["email"] ?>" id="memberEmailField" name="member_email" aria-label="Change members email" aria-describedby="member_email-button" readonly>
 
-                                                        <button class="btn p-0 ms-4" type="button" id="memberEmailButton" onclick="toggleReadOnly('memberEmailButton', 'memberEmailField', '<?php echo $member['email']; ?>')"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                        <button class="btn p-0 ms-4" type="button" id="memberEmailButton" onclick="toggleReadOnly('memberEmailButton', 'memberEmailField', '<?php echo $member['email']; ?>', 'saveMemberEmail')"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                                                 <path fill="<?= $GLOBALS["darkMode"] ? 'white' : 'black' ?>" d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
                                                         </button>
-                                                        <form action="" method="post">
-                                                            <button class="btn ms-4 " name="changeMemberEmail" type="submit" id="saveMemberEmail" style="display: none;">
-                                                                <i class="fa fa-check fa-lg"></i>
-                                                            </button>
-                                                        </form>
+                                                        <button class="btn ms-4 " name="changeMemberEmail" type="submit" id="saveMemberEmail" style="display: none;">
+                                                            <i class="fa fa-check fa-lg"></i>
+                                                        </button>
 
 
                                                     </div>
+
                                                 <?php else : ?>
 
                                                     <div class="input-group ">
@@ -203,6 +247,9 @@ if (isset($_POST["changeMemberEmail"])) {
                                         </div>
                                     </div>
                                 </div>
+                                <?php if (isset($errors["member_email"])) {
+                                    echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["member_email"] . "</span>";
+                                } ?>
                             </div>
                             <div class="col mb-5">
                                 <div class="card  border-profile">
@@ -238,6 +285,42 @@ if (isset($_POST["changeMemberEmail"])) {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col mb-5 mr-5">
+                                <div class="card  border-profile">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+
+                                                <p class="mb-0 h5 fw-bold">Password</p>
+                                                <?php if (!$member["is_admin"]) : ?>
+                                                    <div class="input-group ">
+
+                                                        <input class="form-control my-2 text-secondary " type="password" value="<?php echo $member["password"] ?>" id="memberPasswordField" name="member_password" aria-label="Change members password" aria-describedby="member_password-button" readonly>
+
+                                                        <button class="btn p-0 ms-4" type="button" id="memberPasswordButton" onclick="toggleReadOnly('memberPasswordButton', 'memberPasswordField', '<?php echo $member['password']; ?>', 'saveMemberPassword')"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                                <path fill="<?= $GLOBALS["darkMode"] ? 'white' : 'black' ?>" d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
+                                                        </button>
+                                                        <button class="btn ms-4 " name="changeMemberPassword" type=" submit" id="saveMemberPassword" style="display: none;">
+                                                            <i class="fa fa-check fa-lg"></i>
+                                                        </button>
+
+
+                                                    </div>
+                                                <?php endif; ?>
+
+
+
+                                            </div>
+                                            <div class="ms-auto d-none d-md-block">
+                                                <i class="fa fa-envelope fa-lg"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php if (isset($errors["member_password"])) {
+                                    echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["member_password"] . "</span>";
+                                } ?>
                             </div>
 
                         </div>

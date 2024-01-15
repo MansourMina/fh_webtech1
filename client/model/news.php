@@ -4,7 +4,7 @@ include_once 'config/dbaccess.php';
 // Function to get all rows from table news
 function getNews()
 {
-    $sql = "SELECT news_id, n.image, category, content, `date`, news_of_the_day, `status`, title, firstname, lastname, member_id FROM news n LEFT join members using(member_id)";
+    $sql = "SELECT news_id, n.image, category, content, `date`, news_of_the_day, `status`, title, firstname, lastname, member_id FROM news n LEFT join members using(member_id) order by date desc";
     $stmt = db->prepare($sql);
     $stmt->execute();
     $res = $stmt->get_result();
@@ -41,11 +41,13 @@ function addNews($news_title, $news_content, $news_image, $news_category)
     return $stmt;
 }
 
+// Function to set all news_of_the_day to false
 function setNewsOfDayBack()
 {
-    $sql = "UPDATE news SET `news_of_the_day` = ? ";
+    $sql = "UPDATE news SET `news_of_the_day` = ? where `news_of_the_day`= ?";
     $stmt = db->prepare($sql);
     $not_news_of_day = 0;
-    $stmt->bind_param("i", $not_news_of_day);
+    $news_of_day = 1;
+    $stmt->bind_param("ii", $not_news_of_day, $news_of_day);
     $stmt->execute();
 }
