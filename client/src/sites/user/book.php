@@ -2,6 +2,8 @@
 $image = '';
 $room = '';
 $total = 0;
+include_once 'model/reservations.php';
+$room_types = getRoomTypes();
 if (isset($_GET['book'])) {
     $images = [
         "Deluxe Ocean-View Suite" => ["image" => "src/images/accomodation/room_2.webp", "price" => 325],
@@ -11,8 +13,14 @@ if (isset($_GET['book'])) {
     ];
 
     if (!empty($_GET['book'])) {
-        $room = $_GET['book'];
-        $image = $images[$_GET['book']]['image'];
+        foreach ($room_types as $room_type) {
+            if ($room_type == $room_type) {
+                if ($room_type['available'] > 0) {
+                    $room = $_GET['book'];
+                    $image = $images[$_GET['book']]['image'];
+                }
+            }
+        }
     }
 }
 
@@ -66,12 +74,15 @@ if (isset($_POST['reservation'])) {
                                     <label for="room">Room</label>
                                     <select class="form-select" aria-label="Room select" id="room" name="room" onchange="changeRoom()">
                                         <option value="" selected disabled>-- not selected --</option>
-                                        <option value="<?php echo 'Deluxe Ocean-View Suite'; ?>" <?php echo $room == "Deluxe Ocean-View Suite" ? 'selected' : '' ?>>Deluxe Ocean-View Suite</option>
-                                        <option value="<?php echo 'Family-Friendly Accommodation'; ?>" <?php echo $room == "Family-Friendly Accommodation" ? 'selected' : '' ?>>Family-Friendly Accommodation</option>
+                                        <?php foreach ($room_types as $room_type) : ?>
+                                            <option <?php echo $room_type['available'] == 0 ? 'disabled' : '' ?> value="<?php echo $room_type['room_type']; ?>" <?php echo $room == $room_type['room_type'] ? 'selected' : '' ?>>
+                                                <?= $room_type['room_type'] ?>
+                                                <?php if ($room_type['available'] == 0) : ?>
 
-                                        <option value="<?php echo 'Elegant Suite with Private Balcony'; ?>" <?php echo $room == "Elegant Suite with Private Balcony" ? 'selected' : '' ?>>Elegant Suite with Private Balcony</option>
-
-                                        <option value="<?php echo 'Classic Comfort and Timeless Elegance'; ?>" <?php echo $room == "Classic Comfort and Timeless Elegance" ? 'selected' : '' ?>>Classic Comfort and Timeless Elegance</option>
+                                                    (not available)
+                                                <?php endif; ?>
+                                            </option>
+                                        <?php endforeach; ?>
                                     </select>
 
                                 </div>

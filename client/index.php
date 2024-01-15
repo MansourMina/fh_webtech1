@@ -34,6 +34,7 @@ $pages = [
     "news" => ["file" => "news.php", "title" => "News", "role" => [0, 1, 2], "showBar" => true],
     "rooms" => ["file" => "rooms.php", "title" => "Rooms", "role" => [0, 1, 2], "showBar" => true],
     "reservations" => ["file" => "user/reservations.php", "title" => "Reservations", "role" => [1], "showBar" => true],
+    "reservation-info" => ["file" => "user/reservation_info.php", "title" => "Reservation Info", "role" => [1, 2], "showBar" => true],
     "book" => ["file" => "user/book.php", "title" => "Booking", "role" => [1], "showBar" => true, "to_login" => true],
     "404" => ["file" => "404.php", "title" => "Page not Found", "role" => [0, 1, 2], "showBar" => false],
     "members" => ["file" => "admin/members_management.php", "title" => "Members Management", "role" => [2], "showBar" => true],
