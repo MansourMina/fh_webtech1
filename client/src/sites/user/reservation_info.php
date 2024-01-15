@@ -17,6 +17,8 @@ if (isset($_GET['reservation-info'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reservation Information">
+
     <style>
         .timeline-with-icons {
             border-left: 1px solid hsl(0, 0%, 90%);
@@ -51,21 +53,6 @@ if (isset($_GET['reservation-info'])) {
 
 <body>
     <div class="container">
-        <div class="card  my-5  text-center bg-<?= $GLOBALS["darkMode"] ? '' : 'light' ?>">
-            <div class="card-body ">
-                <h5 class="card-titel text-muted"><?= $reservation["room_type"] ?></h5>
-                <p class="card-text fw-bold"><?= $reservation["check_in_date"] ?> - <?= $reservation["check_out_date"] ?></p>
-                <p class="card-text fw-bold" style="color:<?= $GLOBALS["darkMode"] ? 'green' : '#15736b' ?>">
-                    <?php
-                    $formatted = number_format($reservation['total_price'], 2, '.', ',');
-                    echo "$" .  $formatted;
-                    ?>
-                </p>
-                <hr>
-                <p class="card-text"><small>VERIFICATION CODE</small></p>
-                <p><?= $reservation['verification_code'] ?></p>
-            </div>
-        </div>
         <section class="py-5 p-3">
             <ul class="timeline-with-icons">
                 <div class="timeline-item mb-5">
@@ -214,9 +201,11 @@ if (isset($_GET['reservation-info'])) {
                             <h5 class="fw-bold">Goodbye! See you soon!</h5>
 
                         </li>
-                        <a href="?reservations" class="btn btn-secondary">
-                            Go back to your Reservations
-                        </a>
+                        <?php if (!$_SESSION['is_admin']) : ?>
+                            <a href="?reservations" class="btn btn-secondary">
+                                Go back to your Reservations
+                            </a>
+                        <?php endif; ?>
 
             </ul>
         </section>

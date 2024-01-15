@@ -11,7 +11,8 @@ $reservations = getMemberReservation($_SESSION["member_id"]);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservations</title>
+    <meta name="description" content="Reservations of User">
+
 </head>
 
 <body>
@@ -57,7 +58,11 @@ $reservations = getMemberReservation($_SESSION["member_id"]);
             </div>
 
         <?php else : ?>
-            <div>nix da</div>
+            <div class="text-center">
+                <h3 class="text-muted">You haven´t done any reservation yet</h3>
+                <a class="btn btn-full mt-5" aria-current="page" href="?book">Book Now</a>
+
+            </div>
         <?php endif; ?>
     </div>
 </body>

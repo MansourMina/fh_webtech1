@@ -110,7 +110,7 @@ include_once 'res/theme/pattern.php';
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="MF Palmside Resort">
     <title><?php echo $title ?></title>
     <?php require_once 'src/util/head.php' ?>

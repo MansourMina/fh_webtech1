@@ -14,17 +14,63 @@ if (isset($_GET['book'])) {
 
     if (!empty($_GET['book'])) {
         foreach ($room_types as $room_type) {
-            if ($room_type == $room_type) {
+            if ($room_type['room_type'] == $_GET['book']) {
                 if ($room_type['available'] > 0) {
                     $room = $_GET['book'];
                     $image = $images[$_GET['book']]['image'];
+                    break;
+                    echo $room_type . " " . $_GET['book'];
                 }
             }
         }
     }
 }
 
-if (isset($_POST['reservation'])) {
+$room = "";
+$checkin = "";
+$checkout = "";
+$nadults = "";
+$nchildren = "";
+$breakfast_checked = false;
+$parking_checked = false;
+$pet_checked = false;
+$special_requests = "";
+$booked = 0;
+$errors = [];
+if (isset($_POST['book_reservation'])) {
+    $fields = [
+        'room' => 'Room',
+        'checkin' => 'Check-In date',
+        'checkout' => 'Check-Out date',
+    ];
+    $breakfast_checked = isset($_POST['breakfast_checked']) ? 1 : 0;
+    $parking_checked = isset($_POST['parking_checked']) ? 1 : 0;
+    $pet_checked = isset($_POST['pet_checked']) ? 1 : 0;
+    $special_requests = isset($_POST['special_requests']) ? $_POST['special_requests'] : 0;
+    $nadults = isset($_POST['nadults']) ? $_POST['nadults'] : 0;
+    $nchildren = isset($_POST['nchildren']) ? $_POST['nadults'] : 0;
+    $total_price = isset($_POST['total_price']) ? $_POST['total_price'] : 0;
+
+    foreach ($fields as $field => $error) {
+        $$field = isset($_POST[$field]) ? $_POST[$field] : "";
+        if (empty($$field)) {
+            $errors[$field] = "$error is required";
+        }
+    }
+    if (empty($nadults) && empty($nchildren)) {
+        $errors['guests'] = "Please check the number of guests!";
+    }
+    if ($checkin > $checkout || $checkin == $checkout || $checkin < date('Y-m-d')) {
+        $errors['dates'] = "Please check your checkin and checkout dates";
+    }
+
+    if (empty($errors)) {
+        $stmt = bookReservation($room, $checkin, $checkout, $nadults, $nchildren, $breakfast_checked, $parking_checked, $pet_checked, $special_requests, $total_price, date('Y-m-d'));
+        if ($stmt) {
+            header("Location: ?");
+            exit();
+        }
+    }
 }
 ?>
 
@@ -34,7 +80,7 @@ if (isset($_POST['reservation'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Reservation - Securely reserve your spot with ease.">
+    <meta name="description" content="Book at MF Palmside Resort">
     <style>
         .booking {
             padding: 7px 0px 7px 0px;
@@ -59,21 +105,27 @@ if (isset($_POST['reservation'])) {
 </head>
 
 <body>
+
     <div class="container-fluid mx-0 px-0">
+
         <div class="container my-5">
             <h1>Request a booking</h1>
             <p>Discover the extraordinary with us.</p>
             <div class="booking">
                 <form action="" method="post">
-
+                    <?php if (isset($errors["dates"])) {
+                        echo "<p class='fw-bold text-danger  fst-italic'>" . $errors["dates"] . "</p>";
+                    } ?>
+                    <?php if (isset($errors["guests"])) {
+                        echo "<p class='fw-bold text-danger  fst-italic'>" . $errors["guests"] . "</p>";
+                    } ?>
                     <div class="row">
                         <div class="col-12  col-lg-7 col-xl-7 border-end">
-
                             <div class="row">
                                 <div class="col">
                                     <label for="room">Room</label>
                                     <select class="form-select" aria-label="Room select" id="room" name="room" onchange="changeRoom()">
-                                        <option value="" selected disabled>-- not selected --</option>
+                                        <option selected disabled>-- not selected --</option>
                                         <?php foreach ($room_types as $room_type) : ?>
                                             <option <?php echo $room_type['available'] == 0 ? 'disabled' : '' ?> value="<?php echo $room_type['room_type']; ?>" <?php echo $room == $room_type['room_type'] ? 'selected' : '' ?>>
                                                 <?= $room_type['room_type'] ?>
@@ -84,8 +136,10 @@ if (isset($_POST['reservation'])) {
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
-
                                 </div>
+                                <?php if (isset($errors["room"])) {
+                                    echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["room"] . "</span>";
+                                } ?>
                             </div>
                             <div class="row">
                                 <div class="col">
@@ -108,10 +162,16 @@ if (isset($_POST['reservation'])) {
                                 <div class="col">
                                     <label for="checkin">Check-in date</label>
                                     <input placeholder="mm/dd/yyyy" type="date" id="checkin" name="checkin" class="form-control" onchange="setDateSummary()">
+                                    <?php if (isset($errors["checkin"])) {
+                                        echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["checkin"] . "</span>";
+                                    } ?>
                                 </div>
                                 <div class="col">
                                     <label for="checkout">Check-out date</label>
                                     <input placeholder="mm/dd/yyyy" type="date" id="checkout" name="checkout" class="form-control" onchange="setDateSummary()">
+                                    <?php if (isset($errors["checkout"])) {
+                                        echo "<span class='fw-bold text-danger  fst-italic'>" . $errors["checkout"] . "</span>";
+                                    } ?>
                                 </div>
                             </div>
                             <div class="row">
@@ -152,7 +212,7 @@ if (isset($_POST['reservation'])) {
                                 </div>
                                 <div class="mt-4">
                                     <div>
-                                        <input class="form-check-input me-2" type="checkbox" value="" id="breakfastCheckbox" onchange="setTotalSummary()">
+                                        <input class="form-check-input me-2" type="checkbox" value="" id="breakfastCheckbox" name="breakfast_checked" onchange="setTotalSummary()">
                                         <label class="form-check-label" for="breakfastCheckbox">
                                             breakfast <span class="text-muted">(23€/night)</span>
                                         </label>
@@ -160,13 +220,13 @@ if (isset($_POST['reservation'])) {
 
 
                                     <div>
-                                        <input class="form-check-input me-2" type="checkbox" value="" id="parkingCheckbox" onchange="setTotalSummary()">
+                                        <input class="form-check-input me-2" type="checkbox" value="" id="parkingCheckbox" name="parking_checked" onchange="setTotalSummary()">
                                         <label class="form-check-label" for="parkingCheckbox">
                                             parking space <span class="text-muted">(12€/night)</span>
                                         </label>
                                     </div>
                                     <div>
-                                        <input class="form-check-input me-2" type="checkbox" value="true" id="petCheckbox" onchange="setTotalSummary()">
+                                        <input class="form-check-input me-2" type="checkbox" value="true" id="petCheckbox" name="pet_checked" onchange="setTotalSummary()">
                                         <label class="form-check-label" for="petCheckbox">
                                             Pet on board <span class="text-muted">(52€)</span>
                                         </label>
@@ -245,11 +305,11 @@ if (isset($_POST['reservation'])) {
 
                                 <div class="d-flex justify-content-between mt-3">
                                     <span class="font-weight-bold">Total</span>
-                                    <span class="font-weight-bold theme-color" id="payment_summary">$0.00</span>
+                                    <span class="font-weight-bold theme-color" id="payment_summary" name="payment_summary">$0.00</span>
                                 </div>
 
                                 <div class="d-flex mt-4 justify-content-end">
-                                    <button type="submit" name="reservation" class="btn btn-dark btn-full  w-50 mt-4  " style="outline: none;box-shadow:none !important;
+                                    <button type="submit" name="book_reservation" class="btn btn-dark btn-full  w-50 mt-4  " style="outline: none;box-shadow:none !important;
                           border:0px solid #ccc !important;">Book</button>
                                     <a type="button" name="register" value="1" class="btn btn-danger  w-50 mt-4 ms-3 " style="outline: none;box-shadow:none !important;
                           border:0px solid #ccc !important;" href="?">Cancel booking</a>
@@ -257,11 +317,15 @@ if (isset($_POST['reservation'])) {
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" id="total_price" name="total_price" />
+
                 </form>
 
             </div>
         </div>
     </div>
+
+
     <script>
         let images = {
             "Deluxe Ocean-View Suite": {
@@ -381,9 +445,6 @@ if (isset($_POST['reservation'])) {
                 let payment_children = document.getElementById('payment_children');
                 payment_children.innerText = `${formattedNumber(childrenPrice)} (${children})`;
             }
-
-
-
         }
 
         function showExtrasPaymentSummary(breakfastCheck, parkingCheck, petCheck, days) {
@@ -438,6 +499,7 @@ if (isset($_POST['reservation'])) {
             // Convert to currency format
 
             document.getElementById("payment_summary").innerText = formattedNumber(payment_summary);
+            document.getElementById("total_price").value = payment_summary;
             showRoomPaymentSummary(room_price, days);
             showGuestsPaymentSummary(adultsValue, childrenValue, days * (childrenValue * room_price) / 2, days * adultsValue * room_price)
             showExtrasPaymentSummary(breakfastCheck, parkingCheck, petCheck, days);
